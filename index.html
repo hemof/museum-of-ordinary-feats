@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordinary Feats — A Museum of Ordinary Endurance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14130f;
+    --bg-raised: #1b1a15;
+    --line: rgba(242,237,228,0.09);
+    --ink: #f1ece1;
+    --ink-dim: #a49c8c;
+    --ink-faint: #6f6858;
+    --brass: #b6a06b;
+    --brass-dim: #8a7a54;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; font-weight:300; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond', serif; font-weight:500; letter-spacing:0.01em;}
+  .eyebrow{font-family:'Inter',sans-serif; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--brass); font-weight:500;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 32px;}
+
+  nav{position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:26px 32px; mix-blend-mode:difference; font-size:12px; letter-spacing:0.14em; text-transform:uppercase;}
+  nav .mark{font-family:'Cormorant Garamond',serif; font-size:16px; letter-spacing:0.08em; cursor:pointer;}
+  nav ul{list-style:none; display:flex; gap:34px;}
+  nav a{opacity:0.75; transition:opacity .25s ease; cursor:pointer;}
+  nav a:hover, nav a:focus-visible{opacity:1;}
+  @media (max-width:640px){ nav ul{gap:16px; font-size:9px;} }
+
+  .hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:120px 24px 60px; position:relative;}
+  .hero .eyebrow{margin-bottom:28px; opacity:0; animation:rise 1.1s ease forwards .2s;}
+  .hero h1{font-size:clamp(42px,8vw,96px); line-height:1; letter-spacing:0.02em; opacity:0; animation:rise 1.1s ease forwards .4s;}
+  .hero p.tag{margin-top:26px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(16px,2.4vw,21px); color:var(--ink-dim); opacity:0; animation:rise 1.1s ease forwards .65s;}
+  .scrolldown{position:absolute; bottom:48px; left:50%; transform:translateX(-50%); font-size:20px; color:var(--brass-dim); opacity:0; animation:rise 1.1s ease forwards 1s, float 2.6s ease-in-out 2.1s infinite; cursor:pointer;}
+  @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes float{ 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,8px);} }
+  @media (prefers-reduced-motion:reduce){ .hero *{animation:none !important; opacity:1 !important;} }
+
+  section{padding:100px 0;}
+  .section-head{text-align:center; margin-bottom:56px;}
+  .section-head .eyebrow{display:block; margin-bottom:10px;}
+  .section-head h2{font-size:clamp(28px,4vw,40px);}
+
+  .stats{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .stat{padding:38px 14px; text-align:center; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .n{font-family:'Cormorant Garamond',serif; font-size:clamp(26px,3.4vw,40px); color:var(--ink);}
+  .stat .l{margin-top:6px; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint);}
+  .stat.jest .n{color:var(--brass-dim);}
+  @media (max-width:820px){ .stats{grid-template-columns:repeat(3,1fr);} .stat:nth-child(3n){border-right:none;} .stat{padding:26px 10px;} }
+
+  .featured{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; border:1px solid var(--line); padding:56px;}
+  .featured .frame{aspect-ratio:4/5; background:radial-gradient(120% 140% at 20% 0%, #2a271e 0%, transparent 60%), linear-gradient(160deg,#221f19,#100f0c 70%); position:relative; overflow:hidden;}
+  .featured .frame::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 5px);}
+  .featured .id{color:var(--brass); font-size:12px; letter-spacing:0.18em; margin-bottom:14px;}
+  .featured h3{font-size:clamp(28px,3.4vw,38px); margin-bottom:6px;}
+  .featured .meta{color:var(--ink-dim); font-size:14px; margin-bottom:22px;}
+  .btn{display:inline-block; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; border-bottom:1px solid var(--brass-dim); padding-bottom:4px; color:var(--ink); cursor:pointer; transition:border-color .25s ease, color .25s ease; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit;}
+  .btn:hover, .btn:focus-visible{border-color:var(--brass); color:var(--brass);}
+  @media (max-width:760px){ .featured{grid-template-columns:1fr; padding:32px;} }
+
+  .collections{display:grid; grid-template-columns:repeat(3,1fr);}
+  .collection{border:1px solid var(--line); border-left:none; padding:40px 30px; transition:background .3s ease; cursor:pointer;}
+  .collection:first-child{border-left:1px solid var(--line);}
+  .collection:hover{background:var(--bg-raised);}
+  .collection h3{font-size:24px; margin-bottom:4px;}
+  .collection .count{font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--brass-dim); margin-bottom:18px;}
+  .collection p{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px; line-height:1.5;}
+  @media (max-width:760px){ .collections{grid-template-columns:1fr;} .collection{border-left:1px solid var(--line);} }
+
+  .acq-list{border-top:1px solid var(--line);}
+  .acq-row{display:grid; grid-template-columns:90px 1fr auto; gap:24px; align-items:baseline; padding:26px 4px; border-bottom:1px solid var(--line); cursor:pointer; transition:padding-left .25s ease, color .25s ease;}
+  .acq-row:hover{padding-left:14px;}
+  .acq-row:hover .acq-name{color:var(--brass);}
+  .acq-row .of-id{color:var(--ink-faint); font-size:12px; letter-spacing:0.08em;}
+  .acq-name{font-family:'Cormorant Garamond',serif; font-size:22px; transition:color .25s ease;}
+  .acq-row .year{color:var(--ink-faint); font-size:13px;}
+
+  .curator-block{max-width:640px; margin:0 auto; text-align:center;}
+  .curator-block p{font-family:'Cormorant Garamond',serif; font-size:clamp(18px,2.4vw,22px); line-height:1.7; color:var(--ink-dim); font-style:italic;}
+  .curator-block .sig{margin-top:26px; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brass-dim);}
+
+  footer{padding:40px 32px; text-align:center; color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; border-top:1px solid var(--line);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .ex-hero{height:70vh; position:relative; background:radial-gradient(90% 120% at 30% 10%, #2c2820 0%, transparent 55%), linear-gradient(170deg,#221f19,#0e0d0a 75%); display:flex; align-items:flex-end;}
+  .ex-hero::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 5px);}
+  .ex-hero-inner{position:relative; padding:0 32px 56px; width:100%; max-width:1040px; margin:0 auto;}
+  .ex-hero .of-id{color:var(--brass); letter-spacing:0.2em; font-size:12px; margin-bottom:14px;}
+  .ex-hero h1{font-size:clamp(34px,6vw,64px); max-width:760px;}
+
+  .label-grid{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .label-cell{padding:26px 16px; border-right:1px solid var(--line);}
+  .label-cell:last-child{border-right:none;}
+  .label-cell .l{font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;}
+  .label-cell .v{font-family:'Cormorant Garamond',serif; font-size:19px;}
+  .label-cell .v.status{color:var(--brass);}
+  @media (max-width:820px){ .label-grid{grid-template-columns:repeat(3,1fr);} .label-cell:nth-child(3n){border-right:none;} }
+
+  .curator-note{background:var(--bg-raised); border-left:2px solid var(--brass-dim); padding:38px 44px; margin:0 auto; max-width:760px;}
+  .curator-note .eyebrow{display:block; margin-bottom:14px;}
+  .curator-note p{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(18px,2.2vw,22px); line-height:1.6;}
+
+  .story{max-width:680px; margin:0 auto; line-height:1.9; font-size:16px; color:var(--ink-dim); white-space:pre-line;}
+
+  .archive-list{max-width:680px; margin:0 auto; border-top:1px solid var(--line);}
+  .archive-row{display:flex; justify-content:space-between; padding:18px 4px; border-bottom:1px solid var(--line); font-size:14px; color:var(--ink-dim);}
+  .archive-row span:first-child{color:var(--ink);}
+  .archive-row a{color:var(--brass-dim);}
+  .archive-row a:hover{color:var(--brass);}
+
+  .preserved-line{text-align:center; padding:70px 24px 90px; font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:0.02em; color:var(--ink-faint); font-size:15px;}
+  .back-link{display:inline-block; padding:32px; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-dim); cursor:pointer;}
+  .back-link:hover{color:var(--brass);}
+
+  .empty-note{text-align:center; color:var(--ink-faint); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; padding:20px;}
+</style>
+</head>
+<body>
+
+<!--
+=====================================================================
+  RACE DATA — edit only this array to add, change, or remove exhibits.
+  Each object is one race. "collection" must be one of:
+  "Road Marathons", "Mountain Ultras", "Triathlon", "Unfinished Business"
+  Dates use YYYY-MM-DD. Everything else is free text.
+=====================================================================
+-->
+<script>
+const RACES = [
+  {
+    id: "OF-023",
+    name: "Ultra Trail Marão",
+    collection: "Mountain Ultras",
+    date: "2026-05-16",
+    location: "Amarante, Portugal",
+    distance: "62 km",
+    elevation: "4,000 m",
+    duration: "14h 00m",
+    result: "",
+    status: "Preserved",
+    curatorNote: "No unusual athletic ability was documented. The subject nevertheless crossed the finish line after fourteen hours of sustained optimism.",
+    story: "Placeholder for the full account of the day — the climb, the weather, the low point around kilometre 40, and whatever made it worth finishing.",
+    bib: "0472",
+    resultsUrl: "",
+    photosCount: 18
+  },
+  {
+    id: "OF-022",
+    name: "Ironman Cascais",
+    collection: "Triathlon",
+    date: "2025-09-14",
+    location: "Cascais, Portugal",
+    distance: "226 km",
+    elevation: "—",
+    duration: "",
+    status: "Preserved",
+    curatorNote: "Swimming, cycling, and running were performed, in that order, without notable objection.",
+    story: "Placeholder for the story of this race.",
+    bib: "",
+    resultsUrl: "",
+    photosCount: 0
+  },
+  {
+    id: "OF-021",
+    name: "Maratona do Porto",
+    collection: "Road Marathons",
+    date: "2025-11-09",
+    location: "Porto, Portugal",
+    distance: "42.195 km",
+    elevation: "—",
+    duration: "",
+    status: "Preserved",
+    curatorNote: "A reasonable weekend activity, completed at a reasonable pace, for entirely unreasonable reasons.",
+    story: "Placeholder for the story of this race.",
+    bib: "",
+    resultsUrl: "",
+    photosCount: 0
+  }
+];
+
+// Short intro line for each collection. Add an entry here if you introduce
+// a new collection name above that isn't listed yet.
+const COLLECTION_INTROS = {
+  "Road Marathons": "Once considered impossible. Later considered a reasonable weekend activity.",
+  "Mountain Ultras": "Long walks through beautiful places. Occasionally interrupted by running.",
+  "Triathlon": "Swimming. Cycling. Running. Questionable life choices.",
+  "Unfinished Business": "Not every exhibit arrives complete. These are preserved exactly as they were: unfinished."
+};
+</script>
+
+<nav>
+  <span class="mark" onclick="showHome()">ORDINARY FEATS</span>
+  <ul>
+    <li><a onclick="showHome('collections')">Collections</a></li>
+    <li><a onclick="showHome('archive')">Archive</a></li>
+    <li><a onclick="showHome('curator')">The&nbsp;Curator</a></li>
+  </ul>
+</nav>
+
+<!-- HOME VIEW -->
+<div id="home-view" class="view active">
+
+  <div class="hero">
+    <span class="eyebrow">A Museum of Ordinary Endurance</span>
+    <h1>ORDINARY<br>FEATS</h1>
+    <p class="tag">Extraordinary distances. Perfectly ordinary results.</p>
+    <div class="scrolldown" onclick="document.getElementById('stats-section').scrollIntoView({behavior:'smooth'})">↓</div>
+  </div>
+
+  <section id="stats-section" class="stats" aria-label="Collection summary"></section>
+
+  <section class="wrap" id="featured-section"></section>
+
+  <section id="collections">
+    <div class="section-head">
+      <span class="eyebrow">Collections</span>
+      <h2>Rooms of the Museum</h2>
+    </div>
+    <div class="collections wrap" id="collections-list" style="padding:0;"></div>
+  </section>
+
+  <section class="wrap" id="archive">
+    <div class="section-head"><span class="eyebrow">Latest Acquisitions</span></div>
+    <div class="acq-list" id="acquisitions-list"></div>
+  </section>
+
+  <section id="curator" class="wrap">
+    <div class="curator-block">
+      <span class="eyebrow" style="display:block; margin-bottom:20px;">The Curator</span>
+      <p>Ordinary Feats documents a personal collection of endurance events completed over the years. The purpose of the museum is not to celebrate extraordinary performances, but to preserve ordinary achievements that required extraordinary commitment. Every exhibit represents a finished challenge. Nothing more. Nothing less.</p>
+      <div class="sig">Curated by —</div>
+    </div>
+  </section>
+
+  <footer>Ordinary Feats · A Museum of Ordinary Endurance</footer>
+</div>
+
+<!-- EXHIBIT VIEW -->
+<div id="exhibit-view" class="view">
+  <span class="back-link" onclick="showHome()">← Museum</span>
+  <div id="exhibit-content"></div>
+</div>
+
+<script>
+  function fmtDate(iso){
+    if(!iso) return "—";
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+  }
+  function yearOf(iso){ return iso ? iso.slice(0,4) : "—"; }
+  function kmFrom(distanceStr){
+    const m = distanceStr && distanceStr.match(/([\d.,]+)\s*km/);
+    return m ? parseFloat(m[1].replace(',', '.')) : 0;
+  }
+  function elevFrom(elevStr){
+    const m = elevStr && elevStr.match(/([\d.,]+)\s*m/);
+    return m ? parseFloat(m[1].replace(/[.,]/g,'')) : 0;
+  }
+
+  function renderStats(){
+    const active = RACES.filter(r => r.collection !== "Unfinished Business");
+    const totalKm = active.reduce((s,r)=> s + kmFrom(r.distance), 0);
+    const totalElev = active.reduce((s,r)=> s + elevFrom(r.elevation), 0);
+    const countries = new Set(active.map(r => (r.location||"").split(',').pop().trim()).filter(Boolean));
+    const years = new Set(active.map(r=>yearOf(r.date)).filter(y=>y!=="—"));
+    const collections = new Set(RACES.map(r=>r.collection));
+    const yearsSpan = years.size ? (Math.max(...years) - Math.min(...years) + 1) : 0;
+
+    const stats = [
+      {n: active.length, l:"Exhibits"},
+      {n: collections.size, l:"Collections"},
+      {n: totalKm.toLocaleString('en-US', {maximumFractionDigits:0}) + " km", l:"Archived"},
+      {n: totalElev.toLocaleString('en-US') + " m", l:"Elevation Preserved"},
+      {n: yearsSpan || "—", l:"Years of Evidence"},
+      {n: 0, l:"Elite Performances", jest:true}
+    ];
+    document.getElementById('stats-section').innerHTML = stats.map(s =>
+      `<div class="stat${s.jest?' jest':''}"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`
+    ).join('');
+  }
+
+  function renderFeatured(){
+    if(!RACES.length){
+      document.getElementById('featured-section').innerHTML = '<p class="empty-note">No exhibits accessioned yet.</p>';
+      return;
+    }
+    const f = [...RACES].sort((a,b)=> (b.date||"").localeCompare(a.date||""))[0];
+    document.getElementById('featured-section').innerHTML = `
+      <div class="section-head"><span class="eyebrow">Featured Exhibit</span></div>
+      <div class="featured">
+        <div class="frame"></div>
+        <div>
+          <div class="id">${f.id} · ${f.collection} · ${yearOf(f.date)}</div>
+          <h3>${f.name}</h3>
+          <div class="meta">${f.distance || ""}${f.elevation && f.elevation !== "—" ? " · " + f.elevation + " elevation" : ""} · Status: ${f.status}</div>
+          <button class="btn" onclick="showExhibit('${f.id}')">View Exhibit →</button>
+        </div>
+      </div>`;
+  }
+
+  function renderCollections(){
+    const names = [...new Set(RACES.map(r=>r.collection))];
+    document.getElementById('collections-list').innerHTML = names.map(name => {
+      const count = RACES.filter(r=>r.collection===name).length;
+      const intro = COLLECTION_INTROS[name] || "";
+      return `<div class="collection" onclick="filterCollection('${name}')">
+        <h3>${name}</h3>
+        <div class="count">${count} Exhibit${count!==1?'s':''}</div>
+        <p>${intro}</p>
+      </div>`;
+    }).join('') || '<p class="empty-note">No collections yet.</p>';
+  }
+
+  function renderAcquisitions(list){
+    const rows = (list || [...RACES].sort((a,b)=> (b.date||"").localeCompare(a.date||"")).slice(0,8));
+    document.getElementById('acquisitions-list').innerHTML = rows.map(r => `
+      <div class="acq-row" onclick="showExhibit('${r.id}')">
+        <span class="of-id">${r.id}</span>
+        <span class="acq-name">${r.name}</span>
+        <span class="year">${yearOf(r.date)}</span>
+      </div>`).join('') || '<p class="empty-note">No exhibits accessioned yet.</p>';
+  }
+
+  function filterCollection(name){
+    renderAcquisitions(RACES.filter(r=>r.collection===name));
+    document.getElementById('archive').scrollIntoView({behavior:'smooth'});
+  }
+
+  function showExhibit(id){
+    const r = RACES.find(x=>x.id===id);
+    if(!r) return;
+    document.getElementById('exhibit-content').innerHTML = `
+      <div class="ex-hero"><div class="ex-hero-inner">
+        <div class="of-id">${r.id} · ${r.collection.toUpperCase()}</div>
+        <h1>${r.name}</h1>
+      </div></div>
+      <div class="label-grid">
+        <div class="label-cell"><div class="l">Collection</div><div class="v">${r.collection}</div></div>
+        <div class="label-cell"><div class="l">Accessioned</div><div class="v">${yearOf(r.date)}</div></div>
+        <div class="label-cell"><div class="l">Distance</div><div class="v">${r.distance || "—"}</div></div>
+        <div class="label-cell"><div class="l">Elevation</div><div class="v">${r.elevation || "—"}</div></div>
+        <div class="label-cell"><div class="l">Duration</div><div class="v">${r.duration || "—"}</div></div>
+        <div class="label-cell"><div class="l">Status</div><div class="v status">${r.status || "Preserved"}</div></div>
+      </div>
+      <section><div class="curator-note">
+        <span class="eyebrow">Curator's Note</span>
+        <p>${r.curatorNote || ""}</p>
+      </div></section>
+      <section class="wrap">
+        <div class="section-head"><span class="eyebrow">Story</span></div>
+        <div class="story">${r.story || ""}</div>
+      </section>
+      <section class="wrap">
+        <div class="section-head"><span class="eyebrow">Archive</span></div>
+        <div class="archive-list">
+          <div class="archive-row"><span>Date</span><span>${fmtDate(r.date)}</span></div>
+          <div class="archive-row"><span>Location</span><span>${r.location || "—"}</span></div>
+          <div class="archive-row"><span>Photographs</span><span>${r.photosCount || 0}</span></div>
+          <div class="archive-row"><span>Official Results</span><span>${r.resultsUrl ? `<a href="${r.resultsUrl}" target="_blank" rel="noopener">View →</a>` : "—"}</span></div>
+          <div class="archive-row"><span>Bib Number</span><span>${r.bib || "—"}</span></div>
+        </div>
+      </section>
+      <div class="preserved-line">Preserved for future reference.</div>
+    `;
+    document.getElementById('home-view').classList.remove('active');
+    document.getElementById('exhibit-view').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function showHome(anchor){
+    document.getElementById('exhibit-view').classList.remove('active');
+    document.getElementById('home-view').classList.add('active');
+    if(anchor){
+      setTimeout(()=> document.getElementById(anchor).scrollIntoView({behavior:'smooth'}), 30);
+    } else {
+      window.scrollTo(0,0);
+    }
+  }
+
+  renderStats();
+  renderFeatured();
+  renderCollections();
+  renderAcquisitions();
+</script>
+
+</body>
+</html>
