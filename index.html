@@ -1336,6 +1336,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
+    photoFocus: '48% 40%',
     photos: ['images/OF-075.jpeg']
   },
   {
@@ -1352,6 +1353,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
+    photoFocus: '58% 22%',
     photos: ['images/OF-076.jpeg']
   },
   {
@@ -1368,6 +1370,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
+    photoFocus: '46% 15%',
     photos: ['images/OF-077.jpeg']
   },
   {
@@ -1585,8 +1588,9 @@ const COLLECTION_ORDER = [
     const r = RACES.find(x=>x.id===id);
     if(!r) return;
     const photos = r.photos || [];
+    const focus = r.photoFocus || 'center 20%';
     const heroStyle = photos.length
-      ? `style="background-image:linear-gradient(180deg, rgba(20,19,15,0.15), rgba(20,19,15,0.92)), url('${photos[0]}'); background-size:cover; background-position:center;"`
+      ? `style="background-image:linear-gradient(180deg, rgba(20,19,15,0.15), rgba(20,19,15,0.92)), url('${photos[0]}'); background-size:cover; background-position:${focus};"`
       : '';
     const gallerySection = photos.length ? `
       <section class="wrap">
