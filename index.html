@@ -45,6 +45,7 @@
   .section-head{text-align:center; margin-bottom:56px;}
   .section-head .eyebrow{display:block; margin-bottom:10px;}
   .section-head h2{font-size:clamp(28px,4vw,40px);}
+  .collections-sub{margin-top:12px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px;}
 
   .stats{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .stat{padding:38px 14px; text-align:center; border-right:1px solid var(--line);}
@@ -143,7 +144,7 @@ const RACES = [
   {
     id: 'OF-001',
     name: 'Corrida da Lagoa de Santo André',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2011-07-09',
     location: '',
     distance: '10 km',
@@ -170,7 +171,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-002.jpeg']
   },
   {
     id: 'OF-003',
@@ -191,7 +192,7 @@ const RACES = [
   {
     id: 'OF-004',
     name: 'Corrida do Sporting',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2011-10-16',
     location: '',
     distance: '10 km',
@@ -207,7 +208,7 @@ const RACES = [
   {
     id: 'OF-005',
     name: 'Corrida do Tejo',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2011-10-23',
     location: '',
     distance: '10 km',
@@ -239,7 +240,7 @@ const RACES = [
   {
     id: 'OF-007',
     name: 'Corrida da Ajuda',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2011-11-13',
     location: '',
     distance: '10 km',
@@ -255,7 +256,7 @@ const RACES = [
   {
     id: 'OF-008',
     name: 'GP Arrábida',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2011-11-27',
     location: '',
     distance: '12.5 km',
@@ -287,7 +288,7 @@ const RACES = [
   {
     id: 'OF-010',
     name: 'Corrida Luzia Dias',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2012-01-29',
     location: '',
     distance: '10 km',
@@ -319,7 +320,7 @@ const RACES = [
   {
     id: 'OF-012',
     name: 'Corrida Volkswagen',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2012-06-24',
     location: '',
     distance: '10 km',
@@ -346,12 +347,12 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-013.jpeg']
   },
   {
     id: 'OF-014',
     name: 'Corrida do Aeroporto',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2012-10-14',
     location: '',
     distance: '10 km',
@@ -367,7 +368,7 @@ const RACES = [
   {
     id: 'OF-015',
     name: '20km Almeirim',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2012-10-28',
     location: '',
     distance: '20 km',
@@ -383,7 +384,7 @@ const RACES = [
   {
     id: 'OF-016',
     name: 'Corrida Luzia Dias',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2013-01-20',
     location: '',
     distance: '10 km',
@@ -399,7 +400,7 @@ const RACES = [
   {
     id: 'OF-017',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2013-01-27',
     location: '',
     distance: '17 km',
@@ -415,7 +416,7 @@ const RACES = [
   {
     id: 'OF-018',
     name: 'Trail Arruda dos Vinhos',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2013-03-09',
     location: '',
     distance: '17.5 km',
@@ -431,7 +432,7 @@ const RACES = [
   {
     id: 'OF-019',
     name: 'Corrida das Lezírias',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2013-03-10',
     location: '',
     distance: '15 km',
@@ -463,7 +464,7 @@ const RACES = [
   {
     id: 'OF-021',
     name: 'Raid Atlético Vale dos Barris',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2013-04-21',
     location: '',
     distance: '30 km',
@@ -474,7 +475,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-021.jpeg']
   },
   {
     id: 'OF-022',
@@ -527,7 +528,7 @@ const RACES = [
   {
     id: 'OF-025',
     name: '20km Almeirim',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2013-10-27',
     location: '',
     distance: '20 km',
@@ -559,7 +560,7 @@ const RACES = [
   {
     id: 'OF-027',
     name: 'Raid Atlético Vale dos Barris',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2015-04-26',
     location: '',
     distance: '15 km',
@@ -575,7 +576,7 @@ const RACES = [
   {
     id: 'OF-028',
     name: 'Palmela Run',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2015-06-27',
     location: '',
     distance: '12.5 km',
@@ -591,7 +592,7 @@ const RACES = [
   {
     id: 'OF-029',
     name: 'Dura Trail',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2015-10-03',
     location: '',
     distance: '25 km',
@@ -607,7 +608,7 @@ const RACES = [
   {
     id: 'OF-030',
     name: 'GP Atletismo Algueirão-Mem Martins',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-02-21',
     location: '',
     distance: '10 km',
@@ -623,7 +624,7 @@ const RACES = [
   {
     id: 'OF-031',
     name: 'Challenge Caparica - GP Atlântico',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-02-28',
     location: '',
     distance: '10 km',
@@ -639,7 +640,7 @@ const RACES = [
   {
     id: 'OF-032',
     name: 'Corrida das Lezírias',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-03-06',
     location: '',
     distance: '15 km',
@@ -655,7 +656,7 @@ const RACES = [
   {
     id: 'OF-033',
     name: 'Corrida dos Sinos',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-04-03',
     location: '',
     distance: '15 km',
@@ -671,7 +672,7 @@ const RACES = [
   {
     id: 'OF-034',
     name: 'Corrida Internacional 1º de Maio',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-05-01',
     location: '',
     distance: '15 km',
@@ -687,7 +688,7 @@ const RACES = [
   {
     id: 'OF-035',
     name: 'GP Arrábida',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-11-20',
     location: '',
     distance: '12.5 km',
@@ -703,7 +704,7 @@ const RACES = [
   {
     id: 'OF-036',
     name: 'Corrida dos Descobrimentos',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-12-04',
     location: '',
     distance: '10 km',
@@ -719,7 +720,7 @@ const RACES = [
   {
     id: 'OF-037',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2016-12-31',
     location: '',
     distance: '10 km',
@@ -735,7 +736,7 @@ const RACES = [
   {
     id: 'OF-038',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2017-01-29',
     location: '',
     distance: '17 km',
@@ -767,7 +768,7 @@ const RACES = [
   {
     id: 'OF-040',
     name: 'Raid Atlético Vale dos Barris',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2017-04-30',
     location: '',
     distance: '30 km',
@@ -799,7 +800,7 @@ const RACES = [
   {
     id: 'OF-042',
     name: 'Corrida do Tejo',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2017-09-24',
     location: '',
     distance: '10 km',
@@ -815,7 +816,7 @@ const RACES = [
   {
     id: 'OF-043',
     name: 'Dura Trail',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2017-10-28',
     location: '',
     distance: '32 km',
@@ -831,7 +832,7 @@ const RACES = [
   {
     id: 'OF-044',
     name: 'GP Arrábida',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2017-11-22',
     location: '',
     distance: '12.5 km',
@@ -847,7 +848,7 @@ const RACES = [
   {
     id: 'OF-045',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2017-12-30',
     location: '',
     distance: '10 km',
@@ -863,7 +864,7 @@ const RACES = [
   {
     id: 'OF-046',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2018-01-28',
     location: '',
     distance: '17 km',
@@ -911,7 +912,7 @@ const RACES = [
   {
     id: 'OF-049',
     name: 'Marginal à Noite - Oeiras',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2018-06-16',
     location: '',
     distance: '8 km',
@@ -927,7 +928,7 @@ const RACES = [
   {
     id: 'OF-050',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2018-12-29',
     location: '',
     distance: '10 km',
@@ -943,7 +944,7 @@ const RACES = [
   {
     id: 'OF-051',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2019-01-27',
     location: '',
     distance: '17 km',
@@ -959,7 +960,7 @@ const RACES = [
   {
     id: 'OF-052',
     name: 'Corrida Secil entre Fábricas',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2019-06-23',
     location: '',
     distance: '15 km',
@@ -975,7 +976,7 @@ const RACES = [
   {
     id: 'OF-053',
     name: 'Corrida do Tejo',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2019-09-22',
     location: '',
     distance: '10 km',
@@ -991,7 +992,7 @@ const RACES = [
   {
     id: 'OF-054',
     name: 'Dura Trail',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2019-10-28',
     location: '',
     distance: '19 km',
@@ -1007,7 +1008,7 @@ const RACES = [
   {
     id: 'OF-055',
     name: 'GP Arrábida',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2019-11-24',
     location: '',
     distance: '12.5 km',
@@ -1023,7 +1024,7 @@ const RACES = [
   {
     id: 'OF-056',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2019-12-28',
     location: '',
     distance: '10 km',
@@ -1039,7 +1040,7 @@ const RACES = [
   {
     id: 'OF-057',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2020-01-26',
     location: '',
     distance: '17 km',
@@ -1055,7 +1056,7 @@ const RACES = [
   {
     id: 'OF-058',
     name: 'Grande Prémio do Natal',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2021-12-12',
     location: '',
     distance: '10 km',
@@ -1071,7 +1072,7 @@ const RACES = [
   {
     id: 'OF-059',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2022-02-06',
     location: '',
     distance: '17 km',
@@ -1087,7 +1088,7 @@ const RACES = [
   {
     id: 'OF-060',
     name: 'Corrida do Tejo',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2023-09-17',
     location: '',
     distance: '10 km',
@@ -1135,7 +1136,7 @@ const RACES = [
   {
     id: 'OF-063',
     name: 'Corrida dos Descobrimentos',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2023-12-03',
     location: '',
     distance: '10 km',
@@ -1151,7 +1152,7 @@ const RACES = [
   {
     id: 'OF-064',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2024-01-28',
     location: '',
     distance: '17 km',
@@ -1215,7 +1216,7 @@ const RACES = [
   {
     id: 'OF-068',
     name: 'Corrida dos Descobrimentos',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2024-12-01',
     location: '',
     distance: '10 km',
@@ -1242,7 +1243,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-069.jpeg']
   },
   {
     id: 'OF-070',
@@ -1263,7 +1264,7 @@ const RACES = [
   {
     id: 'OF-071',
     name: 'Corrida Secil entre Fábricas',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2025-06-21',
     location: '',
     distance: '13.3 km',
@@ -1295,7 +1296,7 @@ const RACES = [
   {
     id: 'OF-073',
     name: 'Trail Demónios do Lizandro',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2025-11-02',
     location: '',
     distance: '20 km',
@@ -1311,7 +1312,7 @@ const RACES = [
   {
     id: 'OF-074',
     name: 'Corrida dos Descobrimentos',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2025-11-30',
     location: '',
     distance: '10 km',
@@ -1327,7 +1328,7 @@ const RACES = [
   {
     id: 'OF-075',
     name: 'Trilhos dos Reis',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2026-01-11',
     location: '',
     distance: '31 km',
@@ -1394,7 +1395,7 @@ const RACES = [
   {
     id: 'OF-079',
     name: 'Grande Prémio Fim da Europa',
-    collection: 'Road Races',
+    collection: 'Road & Trail',
     date: '2026-05-24',
     location: '',
     distance: '17 km',
@@ -1410,7 +1411,7 @@ const RACES = [
   {
     id: 'OF-080',
     name: 'The Amazing Espite Trail',
-    collection: 'Sprint & Long Trail',
+    collection: 'Road & Trail',
     date: '2026-07-19',
     location: '',
     distance: '19 km',
@@ -1428,21 +1429,29 @@ const RACES = [
 // Short intro line for each collection. Add an entry here if you introduce
 // a new collection name above that isn't listed yet.
 const COLLECTION_INTROS = {
-  "Road Races": "Tarmac, start guns, and the same forecast every November.",
+  "Road & Trail": "Tarmac or dirt, start gun or trailhead — the shorter, unglamorous middle of the collection.",
   "Half Marathons": "Twenty-one kilometres. Long enough to matter, short enough to still smile at the end.",
-  "Marathons": "Forty-two kilometres, agreed upon by convention rather than mercy.",
-  "Sprint & Long Trail": "Long walks through beautiful places. Occasionally interrupted by running.",
-  "Ultra Trail": "Beyond the marathon distance, where the walking becomes strategic rather than optional.",
   "Triathlon": "Swimming. Cycling. Running. Questionable life choices.",
+  "Marathons": "Forty-two kilometres, agreed upon by convention rather than mercy.",
+  "Ultra Trail": "Beyond the marathon distance, where the walking becomes strategic rather than optional.",
+  "IronMan": "Full triathlon distance. The Sunday that eats the whole weekend.",
   "Unfinished Business": "Not every exhibit arrives complete. These are preserved exactly as they were: unfinished."
 };
 
-// Fixed display order: road (ascending distance) -> trail (ascending distance) -> triathlon
+// Fixed display order for the main typification of exhibits
 const COLLECTION_ORDER = [
-  "Road Races", "Half Marathons", "Marathons",
-  "Sprint & Long Trail", "Ultra Trail",
-  "Triathlon",
-  "Unfinished Business"
+  "Road & Trail", "Half Marathons", "Triathlon",
+  "Marathons", "Ultra Trail", "IronMan"
+];
+
+// Second-tier "curated" collections — grouped by nature rather than by type.
+// Assign a race to one of these by adding a `tags: ["Too Long"]`-style field
+// to that race's entry in RACES.
+const TAG_COLLECTIONS = [
+  { name: "Too Long",  intro: "Distances that stopped being a good idea somewhere around the halfway mark." },
+  { name: "Too Often", intro: "The same start line, revisited more times than strictly necessary." },
+  { name: "Too Hard",  intro: "Races that required emotional support poles." },
+  { name: "Why Not",   intro: "No explanation was offered. None was required." }
 ];
 </script>
 
@@ -1465,6 +1474,12 @@ const COLLECTION_ORDER = [
     <div class="scrolldown" onclick="document.getElementById('stats-section').scrollIntoView({behavior:'smooth'})">↓</div>
   </div>
 
+  <div class="wrap" style="padding-top:70px; padding-bottom:0;">
+    <div class="section-head" style="margin-bottom:36px;">
+      <span class="eyebrow">Overview</span>
+      <h2>The Collection at a Glance</h2>
+    </div>
+  </div>
   <section id="stats-section" class="stats" aria-label="Collection summary"></section>
 
   <section class="wrap" id="featured-section"></section>
@@ -1473,8 +1488,18 @@ const COLLECTION_ORDER = [
     <div class="section-head">
       <span class="eyebrow">Collections</span>
       <h2>Rooms of the Museum</h2>
+      <p class="collections-sub">A typification of the exhibits — by distance and discipline.</p>
     </div>
     <div class="collections wrap" id="collections-list" style="padding:0;"></div>
+  </section>
+
+  <section id="tag-collections">
+    <div class="section-head">
+      <span class="eyebrow">Collections</span>
+      <h2>Assembled by Temperament</h2>
+      <p class="collections-sub">Grouped by nature, not by type.</p>
+    </div>
+    <div class="collections wrap" id="tag-collections-list" style="padding:0;"></div>
   </section>
 
   <section class="wrap" id="archive">
@@ -1519,17 +1544,16 @@ const COLLECTION_ORDER = [
     const active = RACES.filter(r => r.collection !== "Unfinished Business");
     const totalKm = active.reduce((s,r)=> s + kmFrom(r.distance), 0);
     const totalElev = active.reduce((s,r)=> s + elevFrom(r.elevation), 0);
-    const countries = new Set(active.map(r => (r.location||"").split(',').pop().trim()).filter(Boolean));
     const years = new Set(active.map(r=>yearOf(r.date)).filter(y=>y!=="—"));
-    const collections = new Set(RACES.map(r=>r.collection));
     const yearsSpan = years.size ? (Math.max(...years) - Math.min(...years) + 1) : 0;
+    const unfinished = RACES.filter(r => r.collection === "Unfinished Business").length;
 
     const stats = [
+      {n: yearsSpan || "—", l:"Years of Evidence"},
       {n: active.length, l:"Exhibits"},
-      {n: collections.size, l:"Collections"},
       {n: totalKm.toLocaleString('en-US', {maximumFractionDigits:0}) + " km", l:"Archived"},
       {n: totalElev.toLocaleString('en-US') + " m", l:"Elevation Preserved"},
-      {n: yearsSpan || "—", l:"Years of Evidence"},
+      {n: unfinished, l:"Unfinished Business", jest: unfinished === 0},
       {n: 0, l:"Elite Performances", jest:true}
     ];
     document.getElementById('stats-section').innerHTML = stats.map(s =>
@@ -1584,10 +1608,7 @@ const COLLECTION_ORDER = [
   }
 
   function renderCollections(){
-    const present = new Set(RACES.map(r=>r.collection));
-    const names = COLLECTION_ORDER.filter(n => present.has(n))
-      .concat([...present].filter(n => !COLLECTION_ORDER.includes(n)));
-    document.getElementById('collections-list').innerHTML = names.map(name => {
+    document.getElementById('collections-list').innerHTML = COLLECTION_ORDER.map(name => {
       const count = RACES.filter(r=>r.collection===name).length;
       const intro = COLLECTION_INTROS[name] || "";
       return `<div class="collection" onclick="filterCollection('${name}')">
@@ -1595,7 +1616,23 @@ const COLLECTION_ORDER = [
         <div class="count">${count} Exhibit${count!==1?'s':''}</div>
         <p>${intro}</p>
       </div>`;
-    }).join('') || '<p class="empty-note">No collections yet.</p>';
+    }).join('');
+  }
+
+  function renderTagCollections(){
+    document.getElementById('tag-collections-list').innerHTML = TAG_COLLECTIONS.map(tc => {
+      const count = RACES.filter(r => (r.tags||[]).includes(tc.name)).length;
+      return `<div class="collection" onclick="filterTag('${tc.name}')">
+        <h3>${tc.name}</h3>
+        <div class="count">${count} Exhibit${count!==1?'s':''}</div>
+        <p>${tc.intro}</p>
+      </div>`;
+    }).join('');
+  }
+
+  function filterTag(name){
+    renderAcquisitions(RACES.filter(r => (r.tags||[]).includes(name)));
+    document.getElementById('archive').scrollIntoView({behavior:'smooth'});
   }
 
   function renderAcquisitions(list){
@@ -1678,6 +1715,7 @@ const COLLECTION_ORDER = [
   renderStats();
   renderFeatured();
   renderCollections();
+  renderTagCollections();
   renderAcquisitions();
 </script>
 
