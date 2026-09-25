@@ -30,6 +30,7 @@
   nav ul{list-style:none; display:flex; gap:34px;}
   nav a{opacity:0.75; transition:opacity .25s ease; cursor:pointer;}
   nav a:hover, nav a:focus-visible{opacity:1;}
+  nav .icon-link{display:inline-flex; align-items:center;}
   @media (max-width:640px){ nav ul{gap:16px; font-size:9px;} }
 
   .hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:120px 24px 60px; position:relative;}
@@ -60,7 +61,11 @@
   .featured .frame::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 5px);}
   .featured .id{color:var(--brass); font-size:12px; letter-spacing:0.18em; margin-bottom:14px;}
   .featured h3{font-size:clamp(28px,3.4vw,38px); margin-bottom:6px;}
-  .featured .meta{color:var(--ink-dim); font-size:14px; margin-bottom:22px;}
+  .featured .meta{color:var(--ink-dim); font-size:14px; margin-bottom:14px;}
+  .featured-note{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px; line-height:1.6; margin-bottom:22px;}
+  .btn-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .btn-mini{font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); border-bottom:1px solid var(--line); padding-bottom:3px; cursor:pointer; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; transition:color .25s ease, border-color .25s ease;}
+  .btn-mini:hover, .btn-mini:focus-visible{color:var(--brass); border-color:var(--brass-dim);}
   .btn{display:inline-block; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; border-bottom:1px solid var(--brass-dim); padding-bottom:4px; color:var(--ink); cursor:pointer; transition:border-color .25s ease, color .25s ease; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit;}
   .btn:hover, .btn:focus-visible{border-color:var(--brass); color:var(--brass);}
   @media (max-width:760px){ .featured{grid-template-columns:1fr; padding:32px;} }
@@ -143,10 +148,26 @@
 const RACES = [
   {
     id: 'OF-001',
+    name: 'Mini Maratona de Lisboa (ponte 25 abril)',
+    collection: 'Marathons',
+    date: '2011-03-20',
+    location: 'Lisboa (Ponte Vasco da Gama)',
+    distance: '8 km',
+    elevation: '',
+    duration: '',
+    status: 'Preserved',
+    curatorNote: 'A rare early work from a largely undocumented period. So distant in running history, and conducted with such admirable informality, that the organisers saw little need for timing equipment. The athlete\'s performance therefore survives only through memory, anecdote, and the increasingly unreliable testimony of the athlete himself.',
+    story: '',
+    bib: '',
+    resultsUrl: '',
+    photos: []
+  },
+  {
+    id: 'OF-002',
     name: 'Corrida da Lagoa de Santo André',
     collection: 'Road & Trail',
     date: '2011-07-09',
-    location: '',
+    location: 'Santiago do Cacém',
     distance: '10 km',
     elevation: '',
     duration: '00:46:58',
@@ -158,27 +179,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-002',
+    id: 'OF-003',
     name: 'Meia Maratona S. João das Lampas',
     collection: 'Half Marathons',
     date: '2011-09-10',
-    location: '',
+    location: 'Sintra',
     distance: '21 km',
     elevation: '',
     duration: '02:14:14',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'An early study in topographical disappointment. The athlete approached a first half marathon under the mistaken assumption that roads would occasionally flatten out. Contemporary evidence suggests they did not',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: ['images/OF-002.jpeg']
   },
   {
-    id: 'OF-003',
+    id: 'OF-004',
     name: 'Meia Maratona de Portugal (ponte VG)',
     collection: 'Half Marathons',
     date: '2011-09-25',
-    location: '',
+    location: 'Lisboa (Ponte Vasco da Gama)',
     distance: '21 km',
     elevation: '',
     duration: '01:52:12',
@@ -190,11 +211,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-004',
+    id: 'OF-005',
     name: 'Corrida do Sporting',
     collection: 'Road & Trail',
     date: '2011-10-16',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:44:18',
@@ -206,11 +227,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-005',
+    id: 'OF-006',
     name: 'Corrida do Tejo',
     collection: 'Road & Trail',
     date: '2011-10-23',
-    location: '',
+    location: 'Oeiras',
     distance: '10 km',
     elevation: '',
     duration: '00:45:59',
@@ -222,11 +243,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-006',
+    id: 'OF-007',
     name: '20km Almeirim',
     collection: 'Half Marathons',
     date: '2011-10-30',
-    location: '',
+    location: 'Almeirim',
     distance: '21 km',
     elevation: '',
     duration: '01:40:35',
@@ -238,11 +259,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-007',
+    id: 'OF-008',
     name: 'Corrida da Ajuda',
     collection: 'Road & Trail',
     date: '2011-11-13',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:43:10',
@@ -254,11 +275,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-008',
+    id: 'OF-009',
     name: 'GP Arrábida',
     collection: 'Road & Trail',
     date: '2011-11-27',
-    location: '',
+    location: 'Setúbal',
     distance: '12.5 km',
     elevation: '',
     duration: '01:05:22',
@@ -270,27 +291,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-009',
+    id: 'OF-010',
     name: 'Meia Maratona de Lisboa',
     collection: 'Half Marathons',
     date: '2011-12-04',
-    location: '',
+    location: 'Lisboa',
     distance: '21 km',
     elevation: '',
     duration: '01:38:58',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'This piece explores the curious belief that arriving several minutes sooner would somehow improve matters. In the finishing photograph, the athlete appears deeply surprised by a result produced entirely by his own actions.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: []
   },
   {
-    id: 'OF-010',
+    id: 'OF-011',
     name: 'Corrida Luzia Dias',
     collection: 'Road & Trail',
     date: '2012-01-29',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:47:26',
@@ -302,11 +323,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-011',
+    id: 'OF-012',
+    name: 'GP Grândola',
+    collection: 'Road & Trail',
+    date: '2012-02-05',
+    location: 'Grândola',
+    distance: '10 km',
+    elevation: '',
+    duration: '00:38:20',
+    status: 'Preserved',
+    curatorNote: '',
+    story: '',
+    bib: '',
+    resultsUrl: '',
+    photos: []
+  },
+  {
+    id: 'OF-013',
     name: 'Meia Maratona de Lisboa (ponte 25 abril)',
     collection: 'Half Marathons',
     date: '2012-03-25',
-    location: '',
+    location: 'Lisboa (Ponte 25 de Abril)',
     distance: '21 km',
     elevation: '',
     duration: '02:09:22',
@@ -318,11 +355,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-012',
+    id: 'OF-014',
     name: 'Corrida Volkswagen',
     collection: 'Road & Trail',
     date: '2012-06-24',
-    location: '',
+    location: 'Palmela',
     distance: '10 km',
     elevation: '',
     duration: '00:48:42',
@@ -334,27 +371,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-013',
+    id: 'OF-015',
     name: 'Meia Maratona de Copenhaga',
     collection: 'Half Marathons',
     date: '2012-09-09',
-    location: '',
+    location: 'Copenhaga, Dinamarca',
     distance: '21 km',
     elevation: '',
     duration: '01:46:00',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'The collection\'s first international exhibit. Particularly notable for introducing the athlete to the revolutionary concept that complete strangers may stand by the roadside and offer encouragement without being asked.',
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: ['images/OF-013.jpeg']
+    photos: []
   },
   {
-    id: 'OF-014',
+    id: 'OF-016',
     name: 'Corrida do Aeroporto',
     collection: 'Road & Trail',
     date: '2012-10-14',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:40:12',
@@ -363,14 +400,14 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-013.jpeg']
   },
   {
-    id: 'OF-015',
+    id: 'OF-017',
     name: '20km Almeirim',
     collection: 'Road & Trail',
     date: '2012-10-28',
-    location: '',
+    location: 'Almeirim',
     distance: '20 km',
     elevation: '',
     duration: '01:40:14',
@@ -382,11 +419,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-016',
+    id: 'OF-018',
     name: 'Corrida Luzia Dias',
     collection: 'Road & Trail',
     date: '2013-01-20',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:43:38',
@@ -398,11 +435,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-017',
+    id: 'OF-019',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2013-01-27',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:26:57',
@@ -414,27 +451,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-018',
+    id: 'OF-020',
     name: 'Trail Arruda dos Vinhos',
     collection: 'Road & Trail',
     date: '2013-03-09',
-    location: '',
+    location: 'Arruda dos Vinhos',
     distance: '17.5 km',
     elevation: '719 m',
     duration: '02:20:13',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'An immersive installation composed primarily of mud. Visitors were invited to reflect on the increasingly blurred distinction between trail running and geological survey work.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: []
   },
   {
-    id: 'OF-019',
+    id: 'OF-021',
     name: 'Corrida das Lezírias',
     collection: 'Road & Trail',
     date: '2013-03-10',
-    location: '',
+    location: 'Vila Franca de Xira',
     distance: '15 km',
     elevation: '',
     duration: '01:18:14',
@@ -446,11 +483,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-020',
+    id: 'OF-022',
     name: 'Meia Maratona de Lisboa (ponte 25 abril)',
     collection: 'Half Marathons',
     date: '2013-03-24',
-    location: '',
+    location: 'Lisboa (Ponte 25 de Abril)',
     distance: '21 km',
     elevation: '',
     duration: '01:47:50',
@@ -462,27 +499,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-021',
+    id: 'OF-023',
     name: 'Raid Atlético Vale dos Barris',
     collection: 'Road & Trail',
     date: '2013-04-21',
-    location: '',
+    location: 'Setúbal',
     distance: '30 km',
     elevation: '1250 m',
     duration: '05:12:06',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'A meditation on perseverance. The athlete finished last, a position requiring the rare achievement of outlasting all remaining opportunities to withdraw.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: ['images/OF-021.jpeg']
   },
   {
-    id: 'OF-022',
+    id: 'OF-024',
     name: 'Meia Maratona de Setúbal',
     collection: 'Half Marathons',
     date: '2013-05-12',
-    location: '',
+    location: 'Setúbal',
     distance: '21 km',
     elevation: '',
     duration: '02:03:55',
@@ -494,11 +531,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-023',
+    id: 'OF-025',
     name: 'Meia Maratona S. João das Lampas',
     collection: 'Half Marathons',
     date: '2013-09-07',
-    location: '',
+    location: 'Sintra',
     distance: '21 km',
     elevation: '',
     duration: '01:59:50',
@@ -510,27 +547,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-024',
+    id: 'OF-026',
     name: 'Maratona de Lisboa',
     collection: 'Marathons',
     date: '2013-10-06',
-    location: '',
+    location: 'Lisboa',
     distance: '42 km',
     elevation: '',
     duration: '05:19:28',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'A bold reinterpretation of the marathon wall. While convention places the phenomenon at kilometre 32, the artist elected to experience it 10 kilometres earlier, demonstrating a commendable commitment to innovation.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: []
   },
   {
-    id: 'OF-025',
+    id: 'OF-027',
     name: '20km Almeirim',
     collection: 'Road & Trail',
     date: '2013-10-27',
-    location: '',
+    location: 'Almeirim',
     distance: '20 km',
     elevation: '',
     duration: '01:43:47',
@@ -542,11 +579,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-026',
+    id: 'OF-028',
     name: 'Meia Maratona de Setúbal',
     collection: 'Half Marathons',
     date: '2014-05-11',
-    location: '',
+    location: 'Setúbal',
     distance: '21 km',
     elevation: '',
     duration: '02:04:02',
@@ -558,11 +595,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-027',
+    id: 'OF-029',
     name: 'Raid Atlético Vale dos Barris',
     collection: 'Road & Trail',
     date: '2015-04-26',
-    location: '',
+    location: 'Setúbal',
     distance: '15 km',
     elevation: '',
     duration: '01:52:48',
@@ -574,11 +611,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-028',
+    id: 'OF-030',
     name: 'Palmela Run',
     collection: 'Road & Trail',
     date: '2015-06-27',
-    location: '',
+    location: 'Palmela',
     distance: '12.5 km',
     elevation: '350 m',
     duration: '01:29:57',
@@ -590,11 +627,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-029',
+    id: 'OF-031',
     name: 'Dura Trail',
     collection: 'Road & Trail',
     date: '2015-10-03',
-    location: '',
+    location: 'Palmela',
     distance: '25 km',
     elevation: '1250 m',
     duration: '03:57:50',
@@ -606,11 +643,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-030',
+    id: 'OF-032',
     name: 'GP Atletismo Algueirão-Mem Martins',
     collection: 'Road & Trail',
     date: '2016-02-21',
-    location: '',
+    location: 'Sintra',
     distance: '10 km',
     elevation: '',
     duration: '00:54:24',
@@ -622,11 +659,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-031',
+    id: 'OF-033',
     name: 'Challenge Caparica - GP Atlântico',
     collection: 'Road & Trail',
     date: '2016-02-28',
-    location: '',
+    location: 'Almada',
     distance: '10 km',
     elevation: '',
     duration: '00:51:25',
@@ -638,11 +675,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-032',
+    id: 'OF-034',
     name: 'Corrida das Lezírias',
     collection: 'Road & Trail',
     date: '2016-03-06',
-    location: '',
+    location: 'Vila Franca de Xira',
     distance: '15 km',
     elevation: '',
     duration: '01:23:27',
@@ -654,11 +691,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-033',
+    id: 'OF-035',
     name: 'Corrida dos Sinos',
     collection: 'Road & Trail',
     date: '2016-04-03',
-    location: '',
+    location: 'Mafra',
     distance: '15 km',
     elevation: '',
     duration: '01:19:48',
@@ -670,11 +707,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-034',
+    id: 'OF-036',
     name: 'Corrida Internacional 1º de Maio',
     collection: 'Road & Trail',
     date: '2016-05-01',
-    location: '',
+    location: 'Lisboa',
     distance: '15 km',
     elevation: '',
     duration: '01:24:39',
@@ -686,11 +723,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-035',
+    id: 'OF-037',
     name: 'GP Arrábida',
     collection: 'Road & Trail',
     date: '2016-11-20',
-    location: '',
+    location: 'Setúbal',
     distance: '12.5 km',
     elevation: '',
     duration: '01:07:59',
@@ -702,11 +739,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-036',
+    id: 'OF-038',
     name: 'Corrida dos Descobrimentos',
     collection: 'Road & Trail',
     date: '2016-12-04',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:47:39',
@@ -718,11 +755,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-037',
+    id: 'OF-039',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
     collection: 'Road & Trail',
     date: '2016-12-31',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:47:38',
@@ -734,11 +771,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-038',
+    id: 'OF-040',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2017-01-29',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:27:57',
@@ -750,11 +787,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-039',
+    id: 'OF-041',
     name: 'Meia Maratona de Lisboa (ponte 25 abril)',
     collection: 'Half Marathons',
     date: '2017-03-19',
-    location: '',
+    location: 'Lisboa (Ponte 25 de Abril)',
     distance: '21 km',
     elevation: '',
     duration: '01:56:50',
@@ -766,11 +803,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-040',
+    id: 'OF-042',
     name: 'Raid Atlético Vale dos Barris',
     collection: 'Road & Trail',
     date: '2017-04-30',
-    location: '',
+    location: 'Setúbal',
     distance: '30 km',
     elevation: '1250 m',
     duration: '04:07:42',
@@ -782,11 +819,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-041',
+    id: 'OF-043',
     name: 'Meia Maratona de Setúbal',
     collection: 'Half Marathons',
     date: '2017-05-21',
-    location: '',
+    location: 'Setúbal',
     distance: '21 km',
     elevation: '',
     duration: '01:53:56',
@@ -798,11 +835,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-042',
+    id: 'OF-044',
     name: 'Corrida do Tejo',
     collection: 'Road & Trail',
     date: '2017-09-24',
-    location: '',
+    location: 'Oeiras',
     distance: '10 km',
     elevation: '',
     duration: '00:50:47',
@@ -814,11 +851,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-043',
+    id: 'OF-045',
     name: 'Dura Trail',
     collection: 'Road & Trail',
     date: '2017-10-28',
-    location: '',
+    location: 'Palmela',
     distance: '32 km',
     elevation: '1540 m',
     duration: '04:45:49',
@@ -830,11 +867,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-044',
+    id: 'OF-046',
     name: 'GP Arrábida',
     collection: 'Road & Trail',
     date: '2017-11-22',
-    location: '',
+    location: 'Setúbal',
     distance: '12.5 km',
     elevation: '',
     duration: '01:01:17',
@@ -846,11 +883,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-045',
+    id: 'OF-047',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
     collection: 'Road & Trail',
     date: '2017-12-30',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:46:53',
@@ -862,11 +899,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-046',
+    id: 'OF-048',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2018-01-28',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:21:41',
@@ -878,11 +915,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-047',
+    id: 'OF-049',
     name: 'Meia Maratona de Cascais',
     collection: 'Half Marathons',
     date: '2018-02-11',
-    location: '',
+    location: 'Cascais',
     distance: '21 km',
     elevation: '',
     duration: '01:55:02',
@@ -894,11 +931,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-048',
+    id: 'OF-050',
     name: 'Meia Maratona de Lisboa (ponte 25 abril)',
     collection: 'Half Marathons',
     date: '2018-03-11',
-    location: '',
+    location: 'Lisboa (Ponte 25 de Abril)',
     distance: '21 km',
     elevation: '',
     duration: '02:06:15',
@@ -910,11 +947,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-049',
+    id: 'OF-051',
     name: 'Marginal à Noite - Oeiras',
     collection: 'Road & Trail',
     date: '2018-06-16',
-    location: '',
+    location: 'Oeiras',
     distance: '8 km',
     elevation: '',
     duration: '00:37:07',
@@ -926,11 +963,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-050',
+    id: 'OF-052',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
     collection: 'Road & Trail',
     date: '2018-12-29',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:49:43',
@@ -942,11 +979,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-051',
+    id: 'OF-053',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2019-01-27',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:32:04',
@@ -958,11 +995,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-052',
+    id: 'OF-054',
     name: 'Corrida Secil entre Fábricas',
     collection: 'Road & Trail',
     date: '2019-06-23',
-    location: '',
+    location: 'Pataias',
     distance: '15 km',
     elevation: '',
     duration: '01:22:09',
@@ -974,11 +1011,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-053',
+    id: 'OF-055',
     name: 'Corrida do Tejo',
     collection: 'Road & Trail',
     date: '2019-09-22',
-    location: '',
+    location: 'Oeiras',
     distance: '10 km',
     elevation: '',
     duration: '00:47:48',
@@ -990,11 +1027,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-054',
+    id: 'OF-056',
     name: 'Dura Trail',
     collection: 'Road & Trail',
     date: '2019-10-28',
-    location: '',
+    location: 'Palmela',
     distance: '19 km',
     elevation: '719 m',
     duration: '02:43:14',
@@ -1006,11 +1043,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-055',
+    id: 'OF-057',
     name: 'GP Arrábida',
     collection: 'Road & Trail',
     date: '2019-11-24',
-    location: '',
+    location: 'Setúbal',
     distance: '12.5 km',
     elevation: '',
     duration: '01:06:14',
@@ -1022,11 +1059,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-056',
+    id: 'OF-058',
     name: 'Corrida S. Silvestre Lisboa (El Corte Inglês)',
     collection: 'Road & Trail',
     date: '2019-12-28',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:49:19',
@@ -1038,11 +1075,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-057',
+    id: 'OF-059',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2020-01-26',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:26:44',
@@ -1054,11 +1091,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-058',
+    id: 'OF-060',
     name: 'Grande Prémio do Natal',
     collection: 'Road & Trail',
     date: '2021-12-12',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:52:58',
@@ -1070,11 +1107,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-059',
+    id: 'OF-061',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2022-02-06',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:35:00',
@@ -1086,11 +1123,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-060',
+    id: 'OF-062',
     name: 'Corrida do Tejo',
     collection: 'Road & Trail',
     date: '2023-09-17',
-    location: '',
+    location: 'Oeiras',
     distance: '10 km',
     elevation: '',
     duration: '00:52:52',
@@ -1102,11 +1139,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-061',
+    id: 'OF-063',
     name: 'Meia Maratona Loures-Odivelas-Loures',
     collection: 'Half Marathons',
     date: '2023-09-24',
-    location: '',
+    location: 'Loures',
     distance: '21 km',
     elevation: '',
     duration: '02:02:28',
@@ -1118,11 +1155,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-062',
+    id: 'OF-064',
     name: 'Meia Maratona de Leiria',
     collection: 'Half Marathons',
     date: '2023-10-22',
-    location: '',
+    location: 'Leiria',
     distance: '21 km',
     elevation: '',
     duration: '01:55:08',
@@ -1134,11 +1171,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-063',
+    id: 'OF-065',
     name: 'Corrida dos Descobrimentos',
     collection: 'Road & Trail',
     date: '2023-12-03',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:50:59',
@@ -1150,11 +1187,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-064',
+    id: 'OF-066',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2024-01-28',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:36:04',
@@ -1166,11 +1203,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-065',
+    id: 'OF-067',
     name: 'Meia Maratona de Setúbal',
     collection: 'Half Marathons',
     date: '2024-04-28',
-    location: '',
+    location: 'Setúbal',
     distance: '21 km',
     elevation: '',
     duration: '02:05:14',
@@ -1182,11 +1219,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-066',
+    id: 'OF-068',
     name: 'Meia Maratona do Douro Vinhateiro',
     collection: 'Half Marathons',
     date: '2024-05-26',
-    location: '',
+    location: 'Peso da Régua',
     distance: '21 km',
     elevation: '',
     duration: '02:10:06',
@@ -1198,11 +1235,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-067',
+    id: 'OF-069',
     name: 'Meia Maratona de Leiria',
     collection: 'Half Marathons',
     date: '2024-10-20',
-    location: '',
+    location: 'Leiria',
     distance: '21 km',
     elevation: '',
     duration: '01:56:15',
@@ -1214,11 +1251,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-068',
+    id: 'OF-070',
     name: 'Corrida dos Descobrimentos',
     collection: 'Road & Trail',
     date: '2024-12-01',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:48:19',
@@ -1230,27 +1267,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-069',
+    id: 'OF-071',
     name: 'Setúbal Triathlon',
     collection: 'Triathlon',
     date: '2025-04-06',
-    location: '',
+    location: 'Setúbal',
     distance: 'Triatlo 70.3',
     elevation: '',
     duration: '06:27:58',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'The debut triathlon. The opening swimming section documents a prolonged and occasionally uneasy conversation between the Atlantic Ocean and an athlete who would have preferred a written introduction.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: ['images/OF-069.jpeg']
   },
   {
-    id: 'OF-070',
+    id: 'OF-072',
     name: 'Meia Maratona do Douro Vinhateiro',
     collection: 'Half Marathons',
     date: '2025-05-25',
-    location: '',
+    location: 'Peso da Régua',
     distance: '21 km',
     elevation: '',
     duration: '01:58:26',
@@ -1262,11 +1299,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-071',
+    id: 'OF-073',
     name: 'Corrida Secil entre Fábricas',
     collection: 'Road & Trail',
     date: '2025-06-21',
-    location: '',
+    location: 'Pataias',
     distance: '13.3 km',
     elevation: '',
     duration: '01:12:24',
@@ -1278,27 +1315,27 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-072',
+    id: 'OF-074',
     name: 'Sines Triathlon',
     collection: 'Triathlon',
     date: '2025-09-21',
-    location: '',
+    location: 'Sines',
     distance: 'Triatlo T100',
     elevation: '',
     duration: '06:08:22',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'A collaborative work featuring a particularly enthusiastic headwind. Although not listed among the competitors, it maintained a consistent presence throughout the cycling segment and influenced the final outcome considerably.',
     story: '',
     bib: '',
     resultsUrl: '',
     photos: []
   },
   {
-    id: 'OF-073',
+    id: 'OF-075',
     name: 'Trail Demónios do Lizandro',
     collection: 'Road & Trail',
     date: '2025-11-02',
-    location: '',
+    location: 'Mafra',
     distance: '20 km',
     elevation: '795 m',
     duration: '02:44:19',
@@ -1310,11 +1347,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-074',
+    id: 'OF-076',
     name: 'Corrida dos Descobrimentos',
     collection: 'Road & Trail',
     date: '2025-11-30',
-    location: '',
+    location: 'Lisboa',
     distance: '10 km',
     elevation: '',
     duration: '00:47:01',
@@ -1326,11 +1363,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-075',
+    id: 'OF-077',
     name: 'Trilhos dos Reis',
     collection: 'Road & Trail',
     date: '2026-01-11',
-    location: '',
+    location: 'Portalegre',
     distance: '31 km',
     elevation: '1537 m',
     duration: '05:07:13',
@@ -1343,16 +1380,16 @@ const RACES = [
     photos: ['images/OF-075.jpeg']
   },
   {
-    id: 'OF-076',
+    id: 'OF-078',
     name: 'Ultra Trail do Marão',
     collection: 'Ultra Trail',
     date: '2026-03-28',
-    location: '',
+    location: 'Serra do Marão',
     distance: '62 km',
     elevation: '4069 m',
     duration: '14:18:08',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'An epic work unfolding over fourteen arduous hours. The central narrative appeared destined for tragedy until the unexpected arrival of a bowl of chicken soup at kilometre 40, now widely regarded as the true protagonist.',
     story: '',
     bib: '',
     resultsUrl: '',
@@ -1360,16 +1397,16 @@ const RACES = [
     photos: ['images/OF-076.jpeg']
   },
   {
-    id: 'OF-077',
+    id: 'OF-079',
     name: 'Maratona da Europa',
     collection: 'Marathons',
     date: '2026-04-25',
-    location: '',
+    location: 'Aveiro',
     distance: '42 km',
     elevation: '',
     duration: '04:37:54',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'Thirteen years after publicly declaring that no further marathons would be attempted, the athlete returned to the discipline. This work examines the structural weakness of promises made to one\'s future self.',
     story: '',
     bib: '',
     resultsUrl: '',
@@ -1377,11 +1414,11 @@ const RACES = [
     photos: ['images/OF-077.jpeg']
   },
   {
-    id: 'OF-078',
+    id: 'OF-080',
     name: 'Oh Meu Deus',
     collection: 'Ultra Trail',
     date: '2026-05-01',
-    location: '',
+    location: 'Seia',
     distance: '51 km',
     elevation: '2758 m',
     duration: '09:40:46',
@@ -1393,11 +1430,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-079',
+    id: 'OF-081',
     name: 'Grande Prémio Fim da Europa',
     collection: 'Road & Trail',
     date: '2026-05-24',
-    location: '',
+    location: 'Sintra',
     distance: '17 km',
     elevation: '',
     duration: '01:31:25',
@@ -1409,11 +1446,11 @@ const RACES = [
     photos: []
   },
   {
-    id: 'OF-080',
+    id: 'OF-082',
     name: 'The Amazing Espite Trail',
     collection: 'Road & Trail',
     date: '2026-07-19',
-    location: '',
+    location: 'Ourém',
     distance: '19 km',
     elevation: '954 m',
     duration: '02:45:37',
@@ -1458,6 +1495,16 @@ const TAG_COLLECTIONS = [
 <nav>
   <span class="mark" onclick="showHome()">ORDINARY FEATS</span>
   <ul>
+    <li>
+      <a href="https://www.strava.com" target="_blank" rel="noopener" class="icon-link" aria-label="Strava" title="Strava">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M10.8 0 5.1 11.7h3.4L10.8 7l2.2 4.7h3.4L10.8 0Zm2.8 13.4-1.6 3.3-1.6-3.3H6.8l4.4 8.9.1.2 4.4-9.1h-3.5Z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://utmbindex.com" target="_blank" rel="noopener" class="icon-link" aria-label="UTMB Index" title="UTMB Index">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 18 8 8l3.2 4.8L14 8l8 10"/><path d="M9.5 18 12 14l1.6 2.2"/></svg>
+      </a>
+    </li>
     <li><a onclick="showHome('collections')">Collections</a></li>
     <li><a onclick="showHome('archive')">Archive</a></li>
     <li><a onclick="showHome('curator')">The&nbsp;Curator</a></li>
@@ -1565,8 +1612,7 @@ const TAG_COLLECTIONS = [
   let lastFeaturedId = null;
 
   function pickFeatured(){
-    const withPhotos = RACES.filter(r => r.photos && r.photos.length);
-    const pool = withPhotos.length ? withPhotos : RACES;
+    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
     if(!pool.length) return null;
     if(pool.length === 1) return pool[0];
     let choice;
@@ -1593,17 +1639,35 @@ const TAG_COLLECTIONS = [
           <div class="id">${f.id} · ${f.collection} · ${yearOf(f.date)}</div>
           <h3>${f.name}</h3>
           <div class="meta">${f.distance || ""}${f.elevation ? " · " + f.elevation + " elevation" : ""} · Status: ${f.status}</div>
-          <button class="btn" onclick="showExhibit('${f.id}')">View Exhibit →</button>
+          <p class="featured-note">${f.curatorNote}</p>
+          <div class="btn-row">
+            <button class="btn" onclick="showExhibit('${f.id}')">View Exhibit →</button>
+            <button class="btn-mini" onclick="pauseFeatured()">Contemplate</button>
+            <button class="btn-mini" onclick="resumeFeatured()">Continue the Tour</button>
+          </div>
         </div>
       </div>`;
   }
 
+  function pauseFeatured(){
+    if(featuredTimer){ clearInterval(featuredTimer); featuredTimer = null; }
+  }
+
+  function resumeFeatured(){
+    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
+    if(pool.length > 1){
+      renderFeaturedRace(pickFeatured());
+      if(featuredTimer) clearInterval(featuredTimer);
+      featuredTimer = setInterval(() => renderFeaturedRace(pickFeatured()), 7000);
+    }
+  }
+
   function renderFeatured(){
     renderFeaturedRace(pickFeatured());
-    const withPhotos = RACES.filter(r => r.photos && r.photos.length);
-    if(withPhotos.length > 1){
+    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
+    if(pool.length > 1){
       if(featuredTimer) clearInterval(featuredTimer);
-      featuredTimer = setInterval(() => renderFeaturedRace(pickFeatured()), 5000);
+      featuredTimer = setInterval(() => renderFeaturedRace(pickFeatured()), 7000);
     }
   }
 
