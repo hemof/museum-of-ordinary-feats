@@ -30,7 +30,6 @@
   nav ul{list-style:none; display:flex; gap:34px;}
   nav a{opacity:0.75; transition:opacity .25s ease; cursor:pointer;}
   nav a:hover, nav a:focus-visible{opacity:1;}
-  nav .icon-link{display:inline-flex; align-items:center;}
   @media (max-width:640px){ nav ul{gap:16px; font-size:9px;} }
 
   .hero{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:120px 24px 60px; position:relative;}
@@ -160,7 +159,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: ['images/OF-001.jpeg']
+    photos: ['images/OF-001.jpg']
   },
   {
     id: 'OF-002',
@@ -512,7 +511,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: ['images/OF-023.jpeg']
+    photos: ['images/OF-023.jpg']
   },
   {
     id: 'OF-024',
@@ -560,7 +559,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: ['images/OF-026.jpeg']
+    photos: ['images/OF-026.jpg']
   },
   {
     id: 'OF-027',
@@ -1410,7 +1409,7 @@ const RACES = [
     bib: '',
     resultsUrl: '',
     photoFocus: '46% 15%',
-    photos: ['images/OF-079.jpeg']
+    photos: ['images/OF-079.jpg']
   },
   {
     id: 'OF-080',
@@ -1494,16 +1493,8 @@ const TAG_COLLECTIONS = [
 <nav>
   <span class="mark" onclick="showHome()">ORDINARY FEATS</span>
   <ul>
-    <li>
-      <a href="https://www.strava.com" target="_blank" rel="noopener" class="icon-link" aria-label="Strava" title="Strava">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M10.8 0 5.1 11.7h3.4L10.8 7l2.2 4.7h3.4L10.8 0Zm2.8 13.4-1.6 3.3-1.6-3.3H6.8l4.4 8.9.1.2 4.4-9.1h-3.5Z"/></svg>
-      </a>
-    </li>
-    <li>
-      <a href="https://utmbindex.com" target="_blank" rel="noopener" class="icon-link" aria-label="UTMB Index" title="UTMB Index">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 18 8 8l3.2 4.8L14 8l8 10"/><path d="M9.5 18 12 14l1.6 2.2"/></svg>
-      </a>
-    </li>
+    <li><a href="https://www.strava.com/athletes/2124837" target="_blank" rel="noopener">Strava</a></li>
+    <li><a href="https://utmb.world/en/runner/7994457.helio.carreira" target="_blank" rel="noopener">UTMB&nbsp;Index</a></li>
     <li><a onclick="showHome('collections')">Collections</a></li>
     <li><a onclick="showHome('archive')">Archive</a></li>
     <li><a onclick="showHome('curator')">The&nbsp;Curator</a></li>
@@ -1641,7 +1632,7 @@ const TAG_COLLECTIONS = [
           <p class="featured-note">${f.curatorNote}</p>
           <div class="btn-row">
             <button class="btn" onclick="showExhibit('${f.id}')">View Exhibit →</button>
-            <button class="btn-mini" onclick="pauseFeatured()">Contemplate</button>
+            <button class="btn-mini" onclick="pauseFeatured()">Pause to Contemplate</button>
             <button class="btn-mini" onclick="resumeFeatured()">Continue the Tour</button>
           </div>
         </div>
