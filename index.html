@@ -104,6 +104,19 @@
   .ex-gallery img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block; filter:saturate(0.9) contrast(1.03);}
   .ex-hero-inner{position:relative; padding:0 32px 56px; width:100%; max-width:1040px; margin:0 auto;}
   .ex-hero .of-id{color:var(--brass); letter-spacing:0.2em; font-size:12px; margin-bottom:14px;}
+
+  .ex-header{padding-top:150px; padding-bottom:36px;}
+  .ex-header .of-id{color:var(--brass); letter-spacing:0.2em; font-size:12px; margin-bottom:14px;}
+  .ex-header h1{font-size:clamp(30px,4.5vw,52px);}
+  .ex-body{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:start; padding-bottom:70px;}
+  .ex-photo-frame{border:1px solid var(--line); background:var(--bg-raised); padding:10px;}
+  .ex-photo-frame img{width:100%; height:auto; display:block;}
+  .ex-photo-placeholder{aspect-ratio:4/5; background:radial-gradient(120% 140% at 20% 0%, #2a271e 0%, transparent 60%), linear-gradient(160deg,#221f19,#100f0c 70%); position:relative; overflow:hidden;}
+  .ex-photo-placeholder::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 5px);}
+  .ex-side{display:flex; flex-direction:column; gap:26px;}
+  .ex-side .curator-note{margin:0;}
+  .ex-side .btn{align-self:flex-start;}
+  @media (max-width:820px){ .ex-body{grid-template-columns:1fr;} .ex-header{padding-top:120px;} }
   .ex-hero h1{font-size:clamp(34px,6vw,64px); max-width:760px;}
 
   .label-grid{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -148,7 +161,7 @@ const RACES = [
   {
     id: 'OF-001',
     name: 'Mini Maratona de Lisboa (ponte 25 abril)',
-    collection: 'Marathons',
+    collection: 'Road & Trail',
     date: '2011-03-20',
     location: 'Lisboa (Ponte Vasco da Gama)',
     distance: '8 km',
@@ -1478,16 +1491,6 @@ const COLLECTION_ORDER = [
   "Road & Trail", "Half Marathons", "Triathlon",
   "Marathons", "Ultra Trail", "IronMan"
 ];
-
-// Second-tier "curated" collections — grouped by nature rather than by type.
-// Assign a race to one of these by adding a `tags: ["Too Long"]`-style field
-// to that race's entry in RACES.
-const TAG_COLLECTIONS = [
-  { name: "Too Long",  intro: "Distances that stopped being a good idea somewhere around the halfway mark." },
-  { name: "Too Often", intro: "The same start line, revisited more times than strictly necessary." },
-  { name: "Too Hard",  intro: "Races that required emotional support poles." },
-  { name: "Why Not",   intro: "No explanation was offered. None was required." }
-];
 </script>
 
 <nav>
@@ -1528,15 +1531,6 @@ const TAG_COLLECTIONS = [
       <p class="collections-sub">A typification of the exhibits — by distance and discipline.</p>
     </div>
     <div class="collections wrap" id="collections-list" style="padding:0;"></div>
-  </section>
-
-  <section id="tag-collections">
-    <div class="section-head">
-      <span class="eyebrow">Collections</span>
-      <h2>Assembled by Temperament</h2>
-      <p class="collections-sub">Grouped by nature, not by type.</p>
-    </div>
-    <div class="collections wrap" id="tag-collections-list" style="padding:0;"></div>
   </section>
 
   <section class="wrap" id="archive">
@@ -1599,17 +1593,14 @@ const TAG_COLLECTIONS = [
   }
 
   let featuredTimer = null;
-  let lastFeaturedId = null;
+  let featuredIndex = -1;
 
   function pickFeatured(){
-    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
+    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim())
+      .sort((a,b) => a.id.localeCompare(b.id));
     if(!pool.length) return null;
-    if(pool.length === 1) return pool[0];
-    let choice;
-    do{
-      choice = pool[Math.floor(Math.random() * pool.length)];
-    } while(choice.id === lastFeaturedId);
-    return choice;
+    featuredIndex = (featuredIndex + 1) % pool.length;
+    return pool[featuredIndex];
   }
 
   function renderFeaturedRace(f){
@@ -1617,7 +1608,6 @@ const TAG_COLLECTIONS = [
       document.getElementById('featured-section').innerHTML = '<p class="empty-note">No exhibits accessioned yet.</p>';
       return;
     }
-    lastFeaturedId = f.id;
     const frameStyle = (f.photos && f.photos.length)
       ? ` style="background-image:linear-gradient(160deg, rgba(34,31,25,0.15), rgba(16,15,12,0.55)), url('${f.photos[0]}'); background-size:cover; background-position:${f.photoFocus || 'center'};"`
       : '';
@@ -1673,22 +1663,6 @@ const TAG_COLLECTIONS = [
     }).join('');
   }
 
-  function renderTagCollections(){
-    document.getElementById('tag-collections-list').innerHTML = TAG_COLLECTIONS.map(tc => {
-      const count = RACES.filter(r => (r.tags||[]).includes(tc.name)).length;
-      return `<div class="collection" onclick="filterTag('${tc.name}')">
-        <h3>${tc.name}</h3>
-        <div class="count">${count} Exhibit${count!==1?'s':''}</div>
-        <p>${tc.intro}</p>
-      </div>`;
-    }).join('');
-  }
-
-  function filterTag(name){
-    renderAcquisitions(RACES.filter(r => (r.tags||[]).includes(name)));
-    document.getElementById('archive').scrollIntoView({behavior:'smooth'});
-  }
-
   function renderAcquisitions(list){
     const rows = (list || [...RACES].sort((a,b)=> (b.date||"").localeCompare(a.date||"")).slice(0,8));
     document.getElementById('acquisitions-list').innerHTML = rows.map(r => `
@@ -1704,24 +1678,38 @@ const TAG_COLLECTIONS = [
     document.getElementById('archive').scrollIntoView({behavior:'smooth'});
   }
 
+  function nextExhibitId(currentId){
+    const sorted = [...RACES].sort((a,b) => a.id.localeCompare(b.id));
+    const idx = sorted.findIndex(r => r.id === currentId);
+    if(idx === -1) return sorted[0].id;
+    return sorted[(idx + 1) % sorted.length].id;
+  }
+
   function showExhibit(id){
     const r = RACES.find(x=>x.id===id);
     if(!r) return;
     const photos = r.photos || [];
-    const focus = r.photoFocus || 'center 20%';
-    const photoLayer = photos.length
-      ? `<div class="ex-hero-photo" style="background-image:url('${photos[0]}'); background-position:${focus};"></div>`
+    const photoBlock = photos.length
+      ? `<img src="${photos[0]}" alt="${r.name}">`
+      : `<div class="ex-photo-placeholder"></div>`;
+    const noteBlock = (r.curatorNote && r.curatorNote.trim())
+      ? `<div class="curator-note">
+           <span class="eyebrow">Curator's Note</span>
+           <p>${r.curatorNote}</p>
+         </div>`
       : '';
-    const gallerySection = photos.length ? `
-      <section class="wrap">
-        <div class="section-head"><span class="eyebrow">Gallery</span></div>
-        <div class="ex-gallery">${photos.map(p=>`<img src="${p}" alt="${r.name}" loading="lazy">`).join('')}</div>
-      </section>` : '';
     document.getElementById('exhibit-content').innerHTML = `
-      <div class="ex-hero${photos.length?' has-photo':''}">${photoLayer}<div class="ex-hero-inner">
+      <div class="ex-header wrap">
         <div class="of-id">${r.id} · ${r.collection.toUpperCase()}</div>
         <h1>${r.name}</h1>
-      </div></div>
+      </div>
+      <div class="ex-body wrap">
+        <div class="ex-photo-frame">${photoBlock}</div>
+        <div class="ex-side">
+          ${noteBlock}
+          <button class="btn" onclick="showExhibit('${nextExhibitId(r.id)}')">Continue the Tour →</button>
+        </div>
+      </div>
       <div class="label-grid">
         <div class="label-cell"><div class="l">Collection</div><div class="v">${r.collection}</div></div>
         <div class="label-cell"><div class="l">Accessioned</div><div class="v">${yearOf(r.date)}</div></div>
@@ -1730,22 +1718,12 @@ const TAG_COLLECTIONS = [
         <div class="label-cell"><div class="l">Duration</div><div class="v">${r.duration || "—"}</div></div>
         <div class="label-cell"><div class="l">Status</div><div class="v status">${r.status || "Preserved"}</div></div>
       </div>
-      <section><div class="curator-note">
-        <span class="eyebrow">Curator's Note</span>
-        <p>${r.curatorNote || ""}</p>
-      </div></section>
-      ${gallerySection}
-      <section class="wrap">
-        <div class="section-head"><span class="eyebrow">Story</span></div>
-        <div class="story">${r.story || ""}</div>
-      </section>
       <section class="wrap">
         <div class="section-head"><span class="eyebrow">Archive</span></div>
         <div class="archive-list">
           <div class="archive-row"><span>Date</span><span>${fmtDate(r.date)}</span></div>
           <div class="archive-row"><span>Location</span><span>${r.location || "—"}</span></div>
-          <div class="archive-row"><span>Photographs</span><span>${photos.length}</span></div>
-          <div class="archive-row"><span>Official Results</span><span>${r.resultsUrl ? `<a href="${r.resultsUrl}" target="_blank" rel="noopener">View →</a>` : "—"}</span></div>
+          <div class="archive-row"><span>Official Results</span><span>${r.duration || "—"}</span></div>
           <div class="archive-row"><span>Bib Number</span><span>${r.bib || "—"}</span></div>
         </div>
       </section>
@@ -1769,7 +1747,6 @@ const TAG_COLLECTIONS = [
   renderStats();
   renderFeatured();
   renderCollections();
-  renderTagCollections();
   renderAcquisitions();
 </script>
 
