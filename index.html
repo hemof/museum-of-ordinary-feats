@@ -1680,9 +1680,14 @@ const COLLECTION_ORDER = [
 
   function nextExhibitId(currentId){
     const sorted = [...RACES].sort((a,b) => a.id.localeCompare(b.id));
+    const withPhotos = sorted.filter(r => r.photos && r.photos.length);
+    if(!withPhotos.length) return currentId;
     const idx = sorted.findIndex(r => r.id === currentId);
-    if(idx === -1) return sorted[0].id;
-    return sorted[(idx + 1) % sorted.length].id;
+    for(let step = 1; step <= sorted.length; step++){
+      const candidate = sorted[(idx + step) % sorted.length];
+      if(candidate.photos && candidate.photos.length) return candidate.id;
+    }
+    return withPhotos[0].id;
   }
 
   function showExhibit(id){
