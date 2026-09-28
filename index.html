@@ -162,7 +162,8 @@
 =====================================================================
   RACE DATA — edit only this array to add, change, or remove exhibits.
   Each object is one race. "collection" must be one of:
-  "Road Marathons", "Mountain Ultras", "Triathlon", "Unfinished Business"
+  "Road & Trail", "Half Marathons", "Triathlon T100 & 70.3", "Marathons",
+  "Ultra Trail", "IronMan", "Unfinished Business"
   Dates use YYYY-MM-DD. Everything else is free text.
 =====================================================================
 -->
@@ -1291,7 +1292,7 @@ const RACES = [
   {
     id: 'OF-071',
     name: 'Setúbal Triathlon',
-    collection: 'Triathlon',
+    collection: 'Triathlon T100 & 70.3',
     date: '2025-04-06',
     location: 'Setúbal',
     distance: 'Triatlo 70.3',
@@ -1339,7 +1340,7 @@ const RACES = [
   {
     id: 'OF-074',
     name: 'Sines Triathlon',
-    collection: 'Triathlon',
+    collection: 'Triathlon T100 & 70.3',
     date: '2025-09-21',
     location: 'Sines',
     distance: 'Triatlo T100',
@@ -1481,6 +1482,22 @@ const RACES = [
     bib: '',
     resultsUrl: '',
     photos: []
+  },
+  {
+    id: 'OF-083',
+    name: 'Sines Triathlon',
+    collection: 'Triathlon T100 & 70.3',
+    date: '2026-09-27',
+    location: 'Sines',
+    distance: 'Triatlo T100',
+    elevation: '',
+    duration: '05:34:43',
+    status: 'Preserved',
+    curatorNote: '',
+    story: '',
+    bib: '',
+    resultsUrl: '',
+    photos: []
   }
 ];
 
@@ -1489,7 +1506,7 @@ const RACES = [
 const COLLECTION_INTROS = {
   "Road & Trail": "Tarmac or dirt, start gun or trailhead — the shorter, unglamorous middle of the collection.",
   "Half Marathons": "Twenty-one kilometres. Long enough to matter, short enough to still smile at the end.",
-  "Triathlon": "Swimming. Cycling. Running. Questionable life choices.",
+  "Triathlon T100 & 70.3": "Swimming. Cycling. Running. Questionable life choices.",
   "Marathons": "Forty-two kilometres, agreed upon by convention rather than mercy.",
   "Ultra Trail": "Beyond the marathon distance, where the walking becomes strategic rather than optional.",
   "IronMan": "Full triathlon distance. The Sunday that eats the whole weekend.",
@@ -1498,7 +1515,7 @@ const COLLECTION_INTROS = {
 
 // Fixed display order for the main typification of exhibits
 const COLLECTION_ORDER = [
-  "Road & Trail", "Half Marathons", "Triathlon",
+  "Road & Trail", "Half Marathons", "Triathlon T100 & 70.3",
   "Marathons", "Ultra Trail", "IronMan"
 ];
 </script>
