@@ -45,6 +45,8 @@
   .section-head{text-align:center; margin-bottom:56px;}
   .section-head .eyebrow{display:block; margin-bottom:10px;}
   .section-head h2{font-size:clamp(28px,4vw,40px);}
+  .section-head.acq-head{display:flex; align-items:baseline; justify-content:center; gap:22px; flex-wrap:wrap;}
+  .section-head.acq-head .eyebrow{display:inline-block; margin-bottom:0;}
   .collections-sub{margin-top:12px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px;}
 
   .stats{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -1561,7 +1563,10 @@ const COLLECTION_ORDER = [
   </section>
 
   <section class="wrap" id="archive">
-    <div class="section-head"><span class="eyebrow">Latest Acquisitions</span></div>
+    <div class="section-head acq-head">
+      <span class="eyebrow">Latest Acquisitions</span>
+      <button id="clear-filter-btn" class="btn-mini" style="display:none;" onclick="clearFilter()">Show all acquisitions</button>
+    </div>
     <div class="acq-list" id="acquisitions-list"></div>
   </section>
 
@@ -1598,7 +1603,11 @@ const COLLECTION_ORDER = [
   }
   function yearOf(iso){ return iso ? iso.slice(0,4) : "—"; }
   function kmFrom(distanceStr){
-    const m = distanceStr && distanceStr.match(/([\d.,]+)\s*km/);
+    if(!distanceStr) return 0;
+    // Triathlon formats: T100 counts as 100 km, 70.3 as 70.3 miles converted to km
+    if(/T100/i.test(distanceStr)) return 100;
+    if(/70\.3/.test(distanceStr)) return 70.3 * 1.609344;
+    const m = distanceStr.match(/([\d.,]+)\s*km/);
     return m ? parseFloat(m[1].replace(',', '.')) : 0;
   }
   function elevFrom(elevStr){
@@ -1698,7 +1707,9 @@ const COLLECTION_ORDER = [
   }
 
   function renderAcquisitions(list){
-    const rows = (list || [...RACES].sort((a,b)=> (b.date||"").localeCompare(a.date||"")).slice(0,8));
+    const byNewest = (a,b) => (b.date||"").localeCompare(a.date||"");
+    const rows = list ? [...list].sort(byNewest) : [...RACES].sort(byNewest).slice(0,8);
+    document.getElementById('clear-filter-btn').style.display = list ? 'inline-block' : 'none';
     document.getElementById('acquisitions-list').innerHTML = rows.map(r => `
       <div class="acq-row" onclick="showQuickCard('${r.id}')">
         <span class="of-id">${r.id}</span>
@@ -1729,6 +1740,10 @@ const COLLECTION_ORDER = [
     if(!e || e.target.id === 'quick-card-modal' || e.target.classList.contains('quick-card-close')){
       document.getElementById('quick-card-modal').classList.remove('active');
     }
+  }
+
+  function clearFilter(){
+    renderAcquisitions();
   }
 
   function filterCollection(name){
