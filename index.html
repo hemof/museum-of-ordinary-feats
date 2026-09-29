@@ -129,6 +129,64 @@
   .quick-card h3{font-size:24px; margin-bottom:22px;}
   .quick-card-rows{border-top:1px solid var(--line);}
   .quick-card-rows .archive-row span.status{color:var(--brass);}
+
+  /* Evolution / Study section */
+  .evo-equiv-grid{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); margin-top:24px;}
+  .evo-equiv{padding:32px 28px; border-right:1px solid var(--line);}
+  .evo-equiv:last-child{border-right:none;}
+  .evo-equiv .k{font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px;}
+  .evo-equiv .v{font-family:'Cormorant Garamond',serif; font-size:30px; color:var(--ink); margin-bottom:16px;}
+  .evo-equiv ul{list-style:none; margin:0; padding:0;}
+  .evo-equiv li{font-size:13px; color:var(--ink-dim); padding:7px 0; border-top:1px solid var(--line);}
+  .evo-equiv li:first-child{border-top:none;}
+  @media (max-width:820px){ .evo-equiv-grid{grid-template-columns:1fr;} .evo-equiv{border-right:none; border-bottom:1px solid var(--line);} .evo-equiv:last-child{border-bottom:none;} }
+
+  .evo-revisited-note{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px; line-height:1.7; max-width:760px; margin:18px 0 26px;}
+  .evo-revisited-table{border-top:1px solid var(--line);}
+  .evo-revisited-row{display:flex; justify-content:space-between; padding:14px 2px; border-bottom:1px solid var(--line); font-size:14px;}
+  .evo-revisited-row span:first-child{color:var(--ink);}
+  .evo-revisited-row span:last-child{color:var(--ink-dim);}
+
+  .evo-sub{margin:64px 0 8px;}
+  .evo-sub .eyebrow{display:block;}
+  .evo-row{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:20px;}
+  .evo-card{padding:30px 26px; border-right:1px solid var(--line);}
+  .evo-card:last-child{border-right:none;}
+  .evo-card .k{font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px;}
+  .evo-card .v{font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--ink); margin-bottom:8px;}
+  .evo-card .d{font-size:13px; color:var(--ink-dim); line-height:1.5;}
+  @media (max-width:820px){ .evo-row{grid-template-columns:1fr;} .evo-card{border-right:none; border-bottom:1px solid var(--line);} .evo-card:last-child{border-bottom:none;} }
+
+  .evo-eras{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); margin-top:20px;}
+  .evo-era{padding:30px 26px; border-right:1px solid var(--line);}
+  .evo-era:last-child{border-right:none;}
+  .evo-era .years{color:var(--brass); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:8px;}
+  .evo-era h4{font-family:'Cormorant Garamond',serif; font-size:22px; margin-bottom:14px;}
+  .evo-era .stat-line{font-size:13px; color:var(--ink-dim); margin-bottom:6px;}
+  .evo-era .quote{margin-top:16px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:15px; line-height:1.55;}
+  @media (max-width:820px){ .evo-eras{grid-template-columns:1fr;} .evo-era{border-right:none; border-bottom:1px solid var(--line);} .evo-era:last-child{border-bottom:none;} }
+
+  .evo-two-col{display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:56px;}
+  @media (max-width:820px){ .evo-two-col{grid-template-columns:1fr;} }
+  .evo-table{border-top:1px solid var(--line); margin-top:16px;}
+  .evo-table-row{display:flex; justify-content:space-between; gap:16px; padding:13px 2px; border-bottom:1px solid var(--line); font-size:14px;}
+  .evo-table-row .yr{color:var(--brass); font-family:'Cormorant Garamond',serif; font-size:17px; width:52px; flex-shrink:0;}
+  .evo-table-row .nm{flex:1; color:var(--ink-dim);}
+  .evo-table-row .val{color:var(--ink); white-space:nowrap;}
+
+  .evo-timeline{position:relative; margin:24px 0 0; padding-left:26px; border-left:1px solid var(--line);}
+  .evo-tl-item{position:relative; padding-bottom:38px;}
+  .evo-tl-item:last-child{padding-bottom:4px;}
+  .evo-tl-item::before{content:""; position:absolute; left:-31px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--brass); border:2px solid var(--bg);}
+  .evo-tl-item .yr{color:var(--brass); font-size:12px; letter-spacing:0.12em; margin-bottom:4px;}
+  .evo-tl-item h5{font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:4px;}
+  .evo-tl-item p{font-size:13px; color:var(--ink-dim);}
+
+  .study-room{margin-top:70px; padding-top:56px; border-top:1px solid var(--line);}
+  .study-controls{display:flex; gap:32px; flex-wrap:wrap; margin-bottom:10px;}
+  .study-controls label{display:flex; flex-direction:column; gap:8px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint);}
+  .study-controls select{background:var(--bg-raised); color:var(--ink); border:1px solid var(--line); padding:9px 12px; font-family:'Inter',sans-serif; font-size:13px; min-width:180px;}
+  .study-controls select:focus{outline:1px solid var(--brass-dim);}
   .ex-hero h1{font-size:clamp(34px,6vw,64px); max-width:760px;}
 
   .label-grid{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -1562,11 +1620,66 @@ const COLLECTION_ORDER = [
     <div class="collections wrap" id="collections-list" style="padding:0;"></div>
   </section>
 
+  <section id="evolution" class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Study</span>
+      <h2>The Artist's Evolution</h2>
+      <p class="collections-sub">A statistical retrospective, compiled from the permanent collection.</p>
+    </div>
+
+    <div class="evo-equiv-grid" id="evo-equivalences"></div>
+
+    <div class="evo-sub"><span class="eyebrow">The Most Revisited Works</span></div>
+    <div id="evo-revisited"></div>
+
+    <div class="evo-row" id="evo-headline"></div>
+
+    <div class="evo-sub">
+      <span class="eyebrow">Evolution by Era</span>
+    </div>
+    <div class="evo-eras" id="evo-eras"></div>
+
+    <div class="evo-two-col">
+      <div>
+        <div class="evo-sub"><span class="eyebrow">Expansion of the Canvas</span></div>
+        <p class="collections-sub" style="text-align:left; margin-top:0;">Running-distance records, in order of achievement.</p>
+        <div class="evo-table" id="evo-distance-records"></div>
+      </div>
+      <div>
+        <div class="evo-sub"><span class="eyebrow">Growing Verticality</span></div>
+        <p class="collections-sub" style="text-align:left; margin-top:0;">Elevation records, in order of achievement.</p>
+        <div class="evo-table" id="evo-elevation-records"></div>
+      </div>
+    </div>
+
+    <div class="study-room">
+      <div class="section-head" style="margin-bottom:30px;">
+        <span class="eyebrow">Study Room</span>
+        <h3>Compose Your Own Findings</h3>
+        <p class="collections-sub">Select criteria to compile statistics from the collection yourself.</p>
+      </div>
+      <div class="study-controls">
+        <label>Type
+          <select id="study-type" onchange="renderStudy()"></select>
+        </label>
+        <label>From
+          <select id="study-from" onchange="renderStudy()"></select>
+        </label>
+        <label>To
+          <select id="study-to" onchange="renderStudy()"></select>
+        </label>
+      </div>
+      <div class="evo-row" id="study-results"></div>
+    </div>
+  </section>
+
   <section class="wrap" id="archive">
     <div class="section-head acq-head">
       <span class="eyebrow">Latest Acquisitions</span>
       <button id="clear-filter-btn" class="btn-mini" style="display:none;" onclick="clearFilter()">Show all acquisitions</button>
+      <button id="full-list-btn" class="btn-mini" onclick="toggleFullList()">Show full list</button>
     </div>
+    <p class="collections-sub" style="text-align:center; margin-top:-8px; margin-bottom:36px;">Select a race to view its key details.</p>
     <div class="acq-list" id="acquisitions-list"></div>
   </section>
 
@@ -1613,6 +1726,236 @@ const COLLECTION_ORDER = [
   function elevFrom(elevStr){
     const m = elevStr && elevStr.match(/([\d.,]+)\s*m/);
     return m ? parseFloat(m[1].replace(/[.,]/g,'')) : 0;
+  }
+
+  // ---------- Evolution / Study helpers ----------
+  function parseDurationSec(d){
+    if(!d) return null;
+    const parts = d.split(':').map(Number);
+    if(parts.length !== 3 || parts.some(isNaN)) return null;
+    return parts[0]*3600 + parts[1]*60 + parts[2];
+  }
+  function paceMinPerKm(km, sec){
+    if(!km || !sec) return null;
+    return sec / 60 / km;
+  }
+  function fmtPace(p){
+    if(p == null || !isFinite(p)) return "—";
+    const m = Math.floor(p);
+    const s = Math.round((p - m) * 60);
+    return `${m}:${String(s).padStart(2,'0')} min/km`;
+  }
+  function fmtHoursMins(sec){
+    if(sec == null || !isFinite(sec)) return "—";
+    const h = Math.floor(sec/3600);
+    const m = Math.round((sec%3600)/60);
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  }
+  function isTriathlon(r){ return r.collection && r.collection.startsWith('Triathlon'); }
+
+  function eligiblePaceRaces(pool){
+    return (pool || RACES).map(r => {
+      const km = isTriathlon(r) ? 0 : kmFrom(r.distance);
+      const sec = parseDurationSec(r.duration);
+      return { r, km, sec, pace: (km>0 && sec) ? paceMinPerKm(km, sec) : null };
+    }).filter(x => x.pace != null);
+  }
+
+  function weightedAvgPace(pool){
+    const elig = eligiblePaceRaces(pool);
+    if(!elig.length) return null;
+    const totalKm = elig.reduce((s,x)=>s+x.km,0);
+    const totalSec = elig.reduce((s,x)=>s+x.sec,0);
+    return totalKm ? (totalSec/60/totalKm) : null;
+  }
+
+  const NUM_WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+  function wordNum(n){ return (n>=0 && n<NUM_WORDS.length) ? NUM_WORDS[n] : String(n); }
+
+  // Reference constants for the equivalences panel
+  const LISBON_PARIS_KM = 1454;
+  const MARATHON_KM = 42.195;
+  const PORTUGAL_NS_KM = 561;
+  const EVEREST_M = 8849;
+  const SERRA_ESTRELA_GAIN_M = 1200;
+  const FLOOR_M = 3;
+
+  function renderEquivalences(){
+    const totalKm = RACES.reduce((s,r)=>s+kmFrom(r.distance),0);
+    const totalElev = RACES.reduce((s,r)=>s+elevFrom(r.elevation),0);
+    const totalSec = RACES.map(r=>parseDurationSec(r.duration)).filter(s=>s!=null).reduce((s,v)=>s+v,0);
+    const totalHours = totalSec/3600;
+
+    const panels = [
+      {
+        k: "Total Distance Archived",
+        v: `≈ ${totalKm.toLocaleString('en-US',{maximumFractionDigits:0})} km`,
+        items: [
+          `${(totalKm/LISBON_PARIS_KM).toFixed(1)}× Lisbon → Paris, in a straight line`,
+          `${Math.round(totalKm/MARATHON_KM)} complete marathons`,
+          `${(totalKm/PORTUGAL_NS_KM).toFixed(1)} crossings of Portugal, north to south`
+        ]
+      },
+      {
+        k: "Total Elevation Preserved",
+        v: `≈ ${totalElev.toLocaleString('en-US')} m D+`,
+        items: [
+          `${(totalElev/EVEREST_M).toFixed(1)} Everests, base to summit`,
+          `${(totalElev/SERRA_ESTRELA_GAIN_M).toFixed(1)}× Serra da Estrela, climbed from the base`,
+          `${Math.round(totalElev/FLOOR_M).toLocaleString('en-US')} flights of stairs`
+        ]
+      },
+      {
+        k: '"Time on Display"',
+        v: `≈ ${Math.round(totalHours).toLocaleString('en-US')} hours in competition`,
+        items: [
+          `${(totalHours/24).toFixed(1)} consecutive days spent racing`,
+          `${(totalHours/40).toFixed(1)} full working weeks, given entirely to competition`
+        ]
+      }
+    ];
+
+    document.getElementById('evo-equivalences').innerHTML = panels.map(p => `
+      <div class="evo-equiv">
+        <div class="k">${p.k}</div>
+        <div class="v">${p.v}</div>
+        <ul>${p.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+      </div>`).join('');
+  }
+
+  function renderRevisited(){
+    const counts = {};
+    RACES.forEach(r => { counts[r.name] = (counts[r.name] || 0) + 1; });
+    const repeats = Object.entries(counts)
+      .filter(([,c]) => c > 1)
+      .sort((a,b) => b[1]-a[1])
+      .slice(0, 5);
+
+    if(!repeats.length){
+      document.getElementById('evo-revisited').innerHTML = '<p class="empty-note">No exhibit has been revisited yet.</p>';
+      return;
+    }
+
+    const [topName, topCount] = repeats[0];
+    const note = `<p class="evo-revisited-note">The Theory of Recurrence — having visited ${topName} ${wordNum(topCount)} times, the collector remains, apparently, convinced that this time will be different.</p>`;
+    const rows = repeats.map(([name,count]) =>
+      `<div class="evo-revisited-row"><span>${name}</span><span>${count} participations</span></div>`
+    ).join('');
+    document.getElementById('evo-revisited').innerHTML = note + `<div class="evo-revisited-table">${rows}</div>`;
+  }
+
+  function renderHeadline(){
+    const elig = eligiblePaceRaces(RACES);
+    const best = elig.slice().sort((a,b)=>a.pace-b.pace)[0];
+    const avgPace = weightedAvgPace(RACES);
+    const allDur = RACES.map(r=>parseDurationSec(r.duration)).filter(s=>s!=null);
+    const avgDur = allDur.length ? allDur.reduce((s,v)=>s+v,0)/allDur.length : null;
+
+    const cards = [
+      {
+        k: "Maximum Velocity Registered",
+        v: best ? fmtPace(best.pace) : "—",
+        d: best ? `${best.r.name} · ${yearOf(best.r.date)} · ${best.r.duration} over ${best.r.distance}` : "No eligible exhibit yet."
+      },
+      {
+        k: "Average Pace of the Collection",
+        v: avgPace ? fmtPace(avgPace) : "—",
+        d: "Weighted across every timed road and trail exhibit in the collection."
+      },
+      {
+        k: "Average Time on Display",
+        v: avgDur ? fmtHoursMins(avgDur) : "—",
+        d: "Mean duration per acquisition, from the first stride to the last."
+      }
+    ];
+    document.getElementById('evo-headline').innerHTML = cards.map(c =>
+      `<div class="evo-card"><div class="k">${c.k}</div><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`
+    ).join('');
+  }
+
+  const ERAS = [
+    { label: "2011–2013", title: "The Age of Speed", from: 2011, to: 2013,
+      quote: "The artist believed every race should be run as fast as humanly possible." },
+    { label: "2014–2020", title: "The Period of Experimentation", from: 2014, to: 2020,
+      quote: "A growing curiosity for mountains, and for voluntary suffering, begins to surface." },
+    { label: "2021–2026", title: "The Monumental Phase", from: 2021, to: 2026,
+      quote: "The work becomes larger than its frame. Pace is no longer the principal measure — duration, effort management, elevation and endurance are." }
+  ];
+
+  function racesInYearRange(from, to){
+    return RACES.filter(r => { const y = parseInt(yearOf(r.date),10); return y>=from && y<=to; });
+  }
+
+  function renderEras(){
+    document.getElementById('evo-eras').innerHTML = ERAS.map(era => {
+      const pool = racesInYearRange(era.from, era.to);
+      const elig = eligiblePaceRaces(pool);
+      const best = elig.slice().sort((a,b)=>a.pace-b.pace)[0];
+      const avgKm = pool.length ? (pool.reduce((s,r)=>s+kmFrom(r.distance),0)/pool.length) : 0;
+      return `<div class="evo-era">
+        <div class="years">${era.label}</div>
+        <h4>${era.title}</h4>
+        <div class="stat-line">${pool.length} exhibit${pool.length!==1?'s':''} accessioned</div>
+        <div class="stat-line">Average distance: ${avgKm ? avgKm.toFixed(1)+' km' : '—'}</div>
+        <div class="stat-line">Fastest pace: ${best ? fmtPace(best.pace)+' ('+best.r.name+')' : '—'}</div>
+        <p class="quote">${era.quote}</p>
+      </div>`;
+    }).join('');
+  }
+
+  function renderRecordsTable(elementId, useElevation){
+    const eligible = RACES.filter(r => !isTriathlon(r) && (useElevation ? elevFrom(r.elevation) : kmFrom(r.distance)) > 0)
+      .slice().sort((a,b)=> a.date.localeCompare(b.date));
+    let max = 0;
+    const records = [];
+    eligible.forEach(r => {
+      const val = useElevation ? elevFrom(r.elevation) : kmFrom(r.distance);
+      if(val > max){
+        max = val;
+        records.push({ year: yearOf(r.date), name: r.name, val, unit: useElevation ? 'm' : 'km' });
+      }
+    });
+    document.getElementById(elementId).innerHTML = records.map(rec =>
+      `<div class="evo-table-row"><span class="yr">${rec.year}</span><span class="nm">${rec.name}</span><span class="val">${rec.val.toLocaleString('en-US')} ${rec.unit}</span></div>`
+    ).join('') || '<p class="empty-note">No records yet.</p>';
+  }
+
+
+  function initStudyControls(){
+    const typeSel = document.getElementById('study-type');
+    typeSel.innerHTML = ['All'].concat(COLLECTION_ORDER).map(c => `<option value="${c}">${c}</option>`).join('');
+    const years = [...new Set(RACES.map(r=>parseInt(yearOf(r.date),10)))].filter(y=>!isNaN(y)).sort((a,b)=>a-b);
+    const fromSel = document.getElementById('study-from');
+    const toSel = document.getElementById('study-to');
+    fromSel.innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join('');
+    toSel.innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join('');
+    fromSel.value = years[0];
+    toSel.value = years[years.length-1];
+  }
+
+  function renderStudy(){
+    const type = document.getElementById('study-type').value;
+    const from = parseInt(document.getElementById('study-from').value,10);
+    const to = parseInt(document.getElementById('study-to').value,10);
+    let pool = racesInYearRange(from, to);
+    if(type !== 'All') pool = pool.filter(r => r.collection === type);
+
+    const totalKm = pool.reduce((s,r)=>s+kmFrom(r.distance),0);
+    const totalElev = pool.reduce((s,r)=>s+elevFrom(r.elevation),0);
+    const avgPace = weightedAvgPace(pool);
+    const durs = pool.map(r=>parseDurationSec(r.duration)).filter(s=>s!=null);
+    const avgDur = durs.length ? durs.reduce((s,v)=>s+v,0)/durs.length : null;
+
+    const cards = [
+      { k: "Exhibits in Range", v: pool.length, d: "" },
+      { k: "Distance Archived", v: totalKm ? totalKm.toLocaleString('en-US',{maximumFractionDigits:0})+" km" : "—", d: "" },
+      { k: "Elevation Preserved", v: totalElev ? totalElev.toLocaleString('en-US')+" m" : "—", d: "" },
+      { k: "Average Pace", v: avgPace ? fmtPace(avgPace) : "—", d: "" },
+      { k: "Average Duration", v: avgDur ? fmtHoursMins(avgDur) : "—", d: "" }
+    ];
+    document.getElementById('study-results').innerHTML = cards.map(c =>
+      `<div class="evo-card"><div class="k">${c.k}</div><div class="v">${c.v}</div></div>`
+    ).join('');
   }
 
   function renderStats(){
@@ -1706,16 +2049,26 @@ const COLLECTION_ORDER = [
     }).join('');
   }
 
+  let showingFullList = false;
+
   function renderAcquisitions(list){
     const byNewest = (a,b) => (b.date||"").localeCompare(a.date||"");
-    const rows = list ? [...list].sort(byNewest) : [...RACES].sort(byNewest).slice(0,8);
+    const rows = list ? [...list].sort(byNewest) : [...RACES].sort(byNewest).slice(0, showingFullList ? RACES.length : 8);
     document.getElementById('clear-filter-btn').style.display = list ? 'inline-block' : 'none';
+    const fullBtn = document.getElementById('full-list-btn');
+    fullBtn.style.display = list ? 'none' : 'inline-block';
+    fullBtn.textContent = showingFullList ? 'Show latest only' : 'Show full list';
     document.getElementById('acquisitions-list').innerHTML = rows.map(r => `
       <div class="acq-row" onclick="showQuickCard('${r.id}')">
         <span class="of-id">${r.id}</span>
         <span class="acq-name">${r.name}</span>
         <span class="year">${yearOf(r.date)}</span>
       </div>`).join('') || '<p class="empty-note">No exhibits accessioned yet.</p>';
+  }
+
+  function toggleFullList(){
+    showingFullList = !showingFullList;
+    renderAcquisitions();
   }
 
   function showQuickCard(id){
@@ -1826,6 +2179,14 @@ const COLLECTION_ORDER = [
   renderFeatured();
   renderCollections();
   renderAcquisitions();
+  renderEquivalences();
+  renderRevisited();
+  renderHeadline();
+  renderEras();
+  renderRecordsTable('evo-distance-records', false);
+  renderRecordsTable('evo-elevation-records', true);
+  initStudyControls();
+  renderStudy();
 </script>
 
 </body>
