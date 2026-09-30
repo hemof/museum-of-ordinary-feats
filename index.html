@@ -91,6 +91,7 @@
   .curator-block{max-width:640px; margin:0 auto; text-align:center;}
   .curator-block p{font-family:'Cormorant Garamond',serif; font-size:clamp(18px,2.4vw,22px); line-height:1.7; color:var(--ink-dim); font-style:italic;}
   .curator-block .sig{margin-top:26px; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brass-dim);}
+  .curator-block .curator-sub{margin-top:16px; font-size:15px; color:var(--ink-faint); font-style:italic;}
 
   footer{padding:40px 32px; text-align:center; color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; border-top:1px solid var(--line);}
 
@@ -182,11 +183,6 @@
   .evo-tl-item h5{font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:4px;}
   .evo-tl-item p{font-size:13px; color:var(--ink-dim);}
 
-  .study-room{margin-top:70px; padding-top:56px; border-top:1px solid var(--line);}
-  .study-controls{display:flex; gap:32px; flex-wrap:wrap; margin-bottom:10px;}
-  .study-controls label{display:flex; flex-direction:column; gap:8px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint);}
-  .study-controls select{background:var(--bg-raised); color:var(--ink); border:1px solid var(--line); padding:9px 12px; font-family:'Inter',sans-serif; font-size:13px; min-width:180px;}
-  .study-controls select:focus{outline:1px solid var(--brass-dim);}
   .ex-hero h1{font-size:clamp(34px,6vw,64px); max-width:760px;}
 
   .label-grid{display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -1597,7 +1593,7 @@ const COLLECTION_ORDER = [
   <div class="hero">
     <span class="eyebrow">A Museum of Ordinary Endurance</span>
     <h1>ORDINARY<br>FEATS</h1>
-    <p class="tag">Extraordinary distances. Perfectly ordinary results.</p>
+    <p class="tag">No records. No rankings. Just evidences that someone kept going.</p>
     <div class="scrolldown" onclick="document.getElementById('stats-section').scrollIntoView({behavior:'smooth'})">↓</div>
   </div>
 
@@ -1623,8 +1619,8 @@ const COLLECTION_ORDER = [
   <section id="evolution" class="wrap">
     <div class="section-head">
       <span class="eyebrow">Study</span>
-      <h2>The Artist's Evolution</h2>
-      <p class="collections-sub">A statistical retrospective, compiled from the permanent collection.</p>
+      <h2>A Collection in Progress</h2>
+      <p class="collections-sub">A statistical retrospective of an unfinished collection.</p>
     </div>
 
     <div class="evo-equiv-grid" id="evo-equivalences"></div>
@@ -1652,30 +1648,11 @@ const COLLECTION_ORDER = [
       </div>
     </div>
 
-    <div class="study-room">
-      <div class="section-head" style="margin-bottom:30px;">
-        <span class="eyebrow">Study Room</span>
-        <h3>Compose Your Own Findings</h3>
-        <p class="collections-sub">Select criteria to compile statistics from the collection yourself.</p>
-      </div>
-      <div class="study-controls">
-        <label>Type
-          <select id="study-type" onchange="renderStudy()"></select>
-        </label>
-        <label>From
-          <select id="study-from" onchange="renderStudy()"></select>
-        </label>
-        <label>To
-          <select id="study-to" onchange="renderStudy()"></select>
-        </label>
-      </div>
-      <div class="evo-row" id="study-results"></div>
-    </div>
   </section>
 
   <section class="wrap" id="archive">
     <div class="section-head acq-head">
-      <span class="eyebrow">Latest Acquisitions</span>
+      <span class="eyebrow">Exhibition History</span>
       <button id="clear-filter-btn" class="btn-mini" style="display:none;" onclick="clearFilter()">Show all acquisitions</button>
       <button id="full-list-btn" class="btn-mini" onclick="toggleFullList()">Show full list</button>
     </div>
@@ -1686,8 +1663,9 @@ const COLLECTION_ORDER = [
   <section id="curator" class="wrap">
     <div class="curator-block">
       <span class="eyebrow" style="display:block; margin-bottom:20px;">The Curator</span>
-      <p>Ordinary Feats documents a personal collection of endurance events completed over the years. The purpose of the museum is not to celebrate extraordinary performances, but to preserve ordinary achievements that required extraordinary commitment. Every exhibit represents a finished challenge. Nothing more. Nothing less.</p>
-      <div class="sig">Curated by —</div>
+      <p>There are enough museums for extraordinary things. This one is for the rest of us.</p>
+      <p class="curator-sub">An ongoing collection of things that were ordinary to everyone except the person who did them.</p>
+      <div class="sig">Curated by: He, Private collection, 2011-present.</div>
     </div>
   </section>
 
@@ -1875,7 +1853,7 @@ const COLLECTION_ORDER = [
 
   const ERAS = [
     { label: "2011–2013", title: "The Age of Speed", from: 2011, to: 2013,
-      quote: "The artist believed every race should be run as fast as humanly possible." },
+      quote: "Every race, without exception, was treated as something to be run as fast as humanly possible." },
     { label: "2014–2020", title: "The Period of Experimentation", from: 2014, to: 2020,
       quote: "A growing curiosity for mountains, and for voluntary suffering, begins to surface." },
     { label: "2021–2026", title: "The Monumental Phase", from: 2021, to: 2026,
@@ -1920,43 +1898,6 @@ const COLLECTION_ORDER = [
     ).join('') || '<p class="empty-note">No records yet.</p>';
   }
 
-
-  function initStudyControls(){
-    const typeSel = document.getElementById('study-type');
-    typeSel.innerHTML = ['All'].concat(COLLECTION_ORDER).map(c => `<option value="${c}">${c}</option>`).join('');
-    const years = [...new Set(RACES.map(r=>parseInt(yearOf(r.date),10)))].filter(y=>!isNaN(y)).sort((a,b)=>a-b);
-    const fromSel = document.getElementById('study-from');
-    const toSel = document.getElementById('study-to');
-    fromSel.innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join('');
-    toSel.innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join('');
-    fromSel.value = years[0];
-    toSel.value = years[years.length-1];
-  }
-
-  function renderStudy(){
-    const type = document.getElementById('study-type').value;
-    const from = parseInt(document.getElementById('study-from').value,10);
-    const to = parseInt(document.getElementById('study-to').value,10);
-    let pool = racesInYearRange(from, to);
-    if(type !== 'All') pool = pool.filter(r => r.collection === type);
-
-    const totalKm = pool.reduce((s,r)=>s+kmFrom(r.distance),0);
-    const totalElev = pool.reduce((s,r)=>s+elevFrom(r.elevation),0);
-    const avgPace = weightedAvgPace(pool);
-    const durs = pool.map(r=>parseDurationSec(r.duration)).filter(s=>s!=null);
-    const avgDur = durs.length ? durs.reduce((s,v)=>s+v,0)/durs.length : null;
-
-    const cards = [
-      { k: "Exhibits in Range", v: pool.length, d: "" },
-      { k: "Distance Archived", v: totalKm ? totalKm.toLocaleString('en-US',{maximumFractionDigits:0})+" km" : "—", d: "" },
-      { k: "Elevation Preserved", v: totalElev ? totalElev.toLocaleString('en-US')+" m" : "—", d: "" },
-      { k: "Average Pace", v: avgPace ? fmtPace(avgPace) : "—", d: "" },
-      { k: "Average Duration", v: avgDur ? fmtHoursMins(avgDur) : "—", d: "" }
-    ];
-    document.getElementById('study-results').innerHTML = cards.map(c =>
-      `<div class="evo-card"><div class="k">${c.k}</div><div class="v">${c.v}</div></div>`
-    ).join('');
-  }
 
   function renderStats(){
     const active = RACES.filter(r => r.collection !== "Unfinished Business");
@@ -2185,8 +2126,7 @@ const COLLECTION_ORDER = [
   renderEras();
   renderRecordsTable('evo-distance-records', false);
   renderRecordsTable('evo-elevation-records', true);
-  initStudyControls();
-  renderStudy();
+
 </script>
 
 </body>
