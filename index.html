@@ -1554,6 +1554,22 @@ const RACES = [
     bib: '',
     resultsUrl: '',
     photos: []
+  },
+  {
+    id: 'OF-084',
+    name: 'IronMan Cascais',
+    collection: 'IronMan',
+    date: '2026-10-17',
+    location: 'Cascais',
+    distance: 'IronMan',
+    elevation: '',
+    duration: '14:47:41',
+    status: 'Preserved',
+    curatorNote: '',
+    story: '',
+    bib: '',
+    resultsUrl: '',
+    photos: []
   }
 ];
 
@@ -1665,7 +1681,7 @@ const COLLECTION_ORDER = [
       <span class="eyebrow" style="display:block; margin-bottom:20px;">The Curator</span>
       <p>There are enough museums for extraordinary things. This one is for the rest of us.</p>
       <p class="curator-sub">An ongoing collection of things that were ordinary to everyone except the person who did them.</p>
-      <div class="sig">Curated by: He, Private collection, 2011-present.</div>
+      <div class="sig">Curated by: HÉLIO CARREIRA, Private collection . 2011-present</div>
     </div>
   </section>
 
@@ -1695,9 +1711,10 @@ const COLLECTION_ORDER = [
   function yearOf(iso){ return iso ? iso.slice(0,4) : "—"; }
   function kmFrom(distanceStr){
     if(!distanceStr) return 0;
-    // Triathlon formats: T100 counts as 100 km, 70.3 as 70.3 miles converted to km
+    // Multisport formats: T100 counts as 100 km; 70.3 and IronMan (140.6) are miles converted to km
     if(/T100/i.test(distanceStr)) return 100;
     if(/70\.3/.test(distanceStr)) return 70.3 * 1.609344;
+    if(/ironman/i.test(distanceStr)) return 140.6 * 1.609344;
     const m = distanceStr.match(/([\d.,]+)\s*km/);
     return m ? parseFloat(m[1].replace(',', '.')) : 0;
   }
@@ -1729,7 +1746,7 @@ const COLLECTION_ORDER = [
     const m = Math.round((sec%3600)/60);
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
   }
-  function isTriathlon(r){ return r.collection && r.collection.startsWith('Triathlon'); }
+  function isTriathlon(r){ return r.collection && (r.collection.startsWith('Triathlon') || r.collection === 'IronMan'); }
 
   function eligiblePaceRaces(pool){
     return (pool || RACES).map(r => {
