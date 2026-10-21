@@ -148,6 +148,7 @@
   .evo-revisited-row span:first-child{color:var(--ink);}
   .evo-revisited-row span:last-child{color:var(--ink-dim);}
 
+  #evolution{padding-bottom:90px;}
   .evo-sub{margin:64px 0 8px;}
   .evo-sub .eyebrow{display:block;}
   .evo-row{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:20px;}
@@ -174,6 +175,10 @@
   .evo-table-row .yr{color:var(--brass); font-family:'Cormorant Garamond',serif; font-size:17px; width:52px; flex-shrink:0;}
   .evo-table-row .nm{flex:1; color:var(--ink-dim);}
   .evo-table-row .val{color:var(--ink); white-space:nowrap;}
+  .evo-table-row.evo-iron{background:var(--bg-raised); border-left:2px solid var(--brass-dim); padding-left:12px;}
+  .evo-table-row.evo-iron .nm, .evo-table-row.evo-iron .val{font-weight:700; color:var(--ink);}
+  .iron-logo{height:22px; width:auto; vertical-align:middle; margin-right:12px;}
+  .iron-badge{display:inline-block; font-size:10px; letter-spacing:0.2em; font-weight:700; color:var(--brass); border:1px solid var(--brass-dim); padding:3px 9px; margin-right:12px; vertical-align:middle;}
 
   .evo-timeline{position:relative; margin:24px 0 0; padding-left:26px; border-left:1px solid var(--line);}
   .evo-tl-item{position:relative; padding-bottom:38px;}
@@ -712,7 +717,7 @@ const RACES = [
     date: '2014-10-25',
     location: 'Setúbal',
     distance: '18 km',
-    elevation: '',
+    elevation: '750 m',
     duration: '03:20:21',
     status: 'Preserved',
     curatorNote: '',
@@ -1699,18 +1704,9 @@ const COLLECTION_ORDER = [
     </div>
     <div class="evo-eras" id="evo-eras"></div>
 
-    <div class="evo-two-col">
-      <div>
-        <div class="evo-sub"><span class="eyebrow">Expansion of the Canvas</span></div>
-        <p class="collections-sub" style="text-align:left; margin-top:0;">Running-distance records, in order of achievement.</p>
-        <div class="evo-table" id="evo-distance-records"></div>
-      </div>
-      <div>
-        <div class="evo-sub"><span class="eyebrow">Growing Verticality</span></div>
-        <p class="collections-sub" style="text-align:left; margin-top:0;">Elevation records, in order of achievement.</p>
-        <div class="evo-table" id="evo-elevation-records"></div>
-      </div>
-    </div>
+    <div class="evo-sub"><span class="eyebrow">Expansion of the Canvas</span></div>
+    <p class="collections-sub" style="text-align:left; margin-top:0;">Running-distance records, in order of achievement.</p>
+    <div class="evo-table" id="evo-canvas"></div>
 
   </section>
 
@@ -1946,21 +1942,44 @@ const COLLECTION_ORDER = [
     }).join('');
   }
 
-  function renderRecordsTable(elementId, useElevation){
-    const eligible = RACES.filter(r => !isTriathlon(r) && (useElevation ? elevFrom(r.elevation) : kmFrom(r.distance)) > 0)
-      .slice().sort((a,b)=> a.date.localeCompare(b.date));
-    let max = 0;
-    const records = [];
-    eligible.forEach(r => {
-      const val = useElevation ? elevFrom(r.elevation) : kmFrom(r.distance);
-      if(val > max){
-        max = val;
-        records.push({ year: yearOf(r.date), name: r.name, val, unit: useElevation ? 'm' : 'km' });
-      }
-    });
-    document.getElementById(elementId).innerHTML = records.map(rec =>
-      `<div class="evo-table-row"><span class="yr">${rec.year}</span><span class="nm">${rec.name}</span><span class="val">${rec.val.toLocaleString('en-US')} ${rec.unit}</span></div>`
-    ).join('') || '<p class="empty-note">No records yet.</p>';
+  // Milestones are matched by race name + date (not by OF number), so renumbering never breaks them.
+  const CANVAS_MILESTONES = [
+    { name: 'Mini Maratona de Lisboa (ponte 25 abril)', date: '2011-03-20' },
+    { name: 'Meia Maratona S. João das Lampas',         date: '2011-09-10' },
+    { name: 'Raid Atlético Vale dos Barris',            date: '2013-04-21' },
+    { name: 'Maratona de Lisboa',                       date: '2013-10-06' },
+    { name: 'Dura Trail',                               date: '2017-10-28' },
+    { name: 'Setúbal Triathlon',                        date: '2025-04-06' },
+    { name: 'Ultra Trail do Marão',                     date: '2026-03-28' },
+    { name: 'IronMan Cascais',                          date: '2026-10-17' }
+  ];
+
+  function ironFallback(img){
+    const badge = document.createElement('span');
+    badge.className = 'iron-badge';
+    badge.textContent = 'IRONMAN';
+    img.replaceWith(badge);
+  }
+
+  function renderCanvas(){
+    const rows = CANVAS_MILESTONES
+      .map(m => RACES.find(r => r.name === m.name && r.date === m.date))
+      .filter(Boolean)
+      .map(r => {
+        const isIron = r.collection === 'IronMan';
+        let val;
+        if(isIron){
+          val = 'IronMan';
+        } else if(isTriathlon(r)){
+          val = r.distance.replace(/^Triatlo/i, 'Triathlon');
+        } else {
+          const elev = elevFrom(r.elevation);
+          val = `${+kmFrom(r.distance).toFixed(1)} km` + (elev ? ` + ${elev.toLocaleString('en-US')} m D+` : '');
+        }
+        const logo = isIron ? `<img class="iron-logo" src="images/ironman-logo.png" alt="IRONMAN" onerror="ironFallback(this)">` : '';
+        return `<div class="evo-table-row${isIron ? ' evo-iron' : ''}"><span class="yr">${yearOf(r.date)}</span><span class="nm">${logo}${r.name}</span><span class="val">${val}</span></div>`;
+      }).join('');
+    document.getElementById('evo-canvas').innerHTML = rows || '<p class="empty-note">No records yet.</p>';
   }
 
 
@@ -2189,8 +2208,7 @@ const COLLECTION_ORDER = [
   renderRevisited();
   renderHeadline();
   renderEras();
-  renderRecordsTable('evo-distance-records', false);
-  renderRecordsTable('evo-elevation-records', true);
+  renderCanvas();
 
 </script>
 
