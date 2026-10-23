@@ -148,6 +148,33 @@
   .evo-revisited-row span:first-child{color:var(--ink);}
   .evo-revisited-row span:last-child{color:var(--ink-dim);}
 
+  /* Visitors' book & attendance */
+  #visitors{padding-top:50px; padding-bottom:30px;}
+  .vb-form{max-width:640px; margin:0 auto; display:flex; flex-direction:column; gap:14px; position:relative;}
+  .vb-form input[type=text], .vb-form textarea{background:var(--bg-raised); color:var(--ink); border:1px solid var(--line); padding:13px 14px; font-family:'Inter',sans-serif; font-size:14px; font-weight:300; width:100%;}
+  .vb-form textarea{min-height:110px; resize:vertical;}
+  .vb-form input:focus, .vb-form textarea:focus{outline:1px solid var(--brass-dim);}
+  .vb-form ::placeholder{color:var(--ink-faint);}
+  .vb-hp{position:absolute !important; left:-9999px; width:1px !important; height:1px; opacity:0;}
+  .vb-actions{display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-top:4px;}
+  .vb-status{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-dim); font-size:16px;}
+  .vb-notes{max-width:640px; margin:52px auto 0;}
+  .vb-note{border-left:2px solid var(--brass-dim); padding:4px 0 4px 22px; margin-bottom:30px;}
+  .vb-note p{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px; line-height:1.55; color:var(--ink); white-space:pre-line; overflow-wrap:anywhere;}
+  .vb-meta{margin-top:9px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
+  .vb-meta img, .att-pop-row img{width:18px; height:auto; display:inline-block; border:1px solid rgba(242,237,228,0.15);}
+  .vb-empty{text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--ink-faint); font-size:18px;}
+  .attendance{text-align:center; padding:50px 24px 80px;}
+  .attendance .eyebrow{display:block; margin-bottom:12px;}
+  .attendance-line{font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--ink-dim);}
+  .attendance-line .att-number{color:var(--ink); font-size:32px;}
+  .att-countries{position:relative; display:inline-block; border-bottom:1px dotted var(--brass-dim); cursor:help; color:var(--ink);}
+  .att-countries:focus{outline:none; border-bottom-color:var(--brass);}
+  .att-pop{display:none; position:absolute; bottom:100%; left:50%; transform:translateX(-50%); padding-bottom:12px; z-index:30; text-align:left;}
+  .att-pop-inner{display:block; background:var(--bg-raised); border:1px solid rgba(242,237,228,0.16); padding:12px 16px; width:240px; max-height:232px; overflow-y:auto; font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.02em; cursor:default;}
+  .att-countries:hover .att-pop, .att-countries:focus .att-pop, .att-countries.open .att-pop{display:block;}
+  .att-pop-row{display:flex; align-items:center; gap:10px; padding:5px 0; color:var(--ink-dim);}
+  .att-pop-row span:last-child{margin-left:auto; color:var(--ink-faint);}
   #evolution{padding-bottom:90px;}
   .evo-sub{margin:64px 0 8px;}
   .evo-sub .eyebrow{display:block;}
@@ -1729,6 +1756,28 @@ const COLLECTION_ORDER = [
     </div>
   </section>
 
+  <section id="visitors" class="wrap">
+    <div class="section-head" style="margin-bottom:36px;">
+      <span class="eyebrow">Visitors' Book</span>
+      <h2>Leave a note in the visitors' book.</h2>
+    </div>
+    <form id="vb-form" class="vb-form" onsubmit="submitNote(event)" autocomplete="off">
+      <input type="text" id="vb-name" maxlength="60" placeholder="Your name" aria-label="Your name" required>
+      <textarea id="vb-message" maxlength="500" placeholder="A few words for the next visitor" aria-label="Your note" required></textarea>
+      <input type="text" id="vb-website" class="vb-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="vb-actions">
+        <button class="btn" type="submit" id="vb-submit">Sign the book</button>
+        <span class="vb-status" id="vb-status" role="status"></span>
+      </div>
+    </form>
+    <div class="vb-notes" id="vb-notes"></div>
+  </section>
+
+  <div class="attendance">
+    <span class="eyebrow">Museum Attendance</span>
+    <div class="attendance-line" id="attendance-line">Counting begins soon.</div>
+  </div>
+
   <footer>Ordinary Feats · A Museum of Ordinary Endurance</footer>
 </div>
 
@@ -2200,6 +2249,143 @@ const COLLECTION_ORDER = [
     }
   }
 
+  /* ================= VISITORS' BOOK & ATTENDANCE ================= */
+  // Fill these two values in after creating the Supabase project (see the setup guide).
+  // They are public by design: the database rules decide what visitors may do.
+  const VISITOR_BACKEND = { url: '', key: '' };
+  const backendReady = () => !!(VISITOR_BACKEND.url && VISITOR_BACKEND.key);
+
+  function escHTML(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  const isCountryCode = c => typeof c === 'string' && /^[A-Z]{2}$/.test(c);
+  const regionNames = (() => { try { return new Intl.DisplayNames(['en'], {type:'region'}); } catch(e){ return null; } })();
+  function countryName(code){
+    try { return (regionNames && regionNames.of(code)) || code; } catch(e){ return code; }
+  }
+  // Flags are images (Windows does not draw flag emoji)
+  function flagImg(code){
+    const c = code.toLowerCase();
+    return `<img src="https://flagcdn.com/w40/${c}.png" srcset="https://flagcdn.com/w80/${c}.png 2x" alt="" loading="lazy">`;
+  }
+
+  function sbFetch(path, opts){
+    const o = opts || {};
+    const headers = Object.assign({ 'apikey': VISITOR_BACKEND.key, 'Content-Type': 'application/json' }, o.headers || {});
+    if(VISITOR_BACKEND.key.startsWith('eyJ')) headers['Authorization'] = 'Bearer ' + VISITOR_BACKEND.key;
+    return fetch(VISITOR_BACKEND.url.replace(/\/$/, '') + '/rest/v1/' + path, Object.assign({}, o, { headers }));
+  }
+
+  let visitorCountry;
+  async function detectCountry(){
+    if(visitorCountry !== undefined) return visitorCountry;
+    const attempt = async (url, parse) => {
+      try {
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 4000);
+        const res = await fetch(url, { signal: ctl.signal });
+        clearTimeout(timer);
+        return res.ok ? parse(await res.text()) : null;
+      } catch(e){ return null; }
+    };
+    let code = await attempt('https://api.country.is/', t => { try { return JSON.parse(t).country; } catch(e){ return null; } });
+    if(!isCountryCode(code)) code = await attempt('https://www.cloudflare.com/cdn-cgi/trace', t => { const m = t.match(/^loc=([A-Z]{2})$/m); return m ? m[1] : null; });
+    visitorCountry = isCountryCode(code) ? code : null;
+    return visitorCountry;
+  }
+
+  // A browser counts once per day
+  async function recordVisit(){
+    if(!backendReady()) return;
+    const today = new Date().toISOString().slice(0, 10);
+    try { if(localStorage.getItem('of_last_visit') === today) return; } catch(e){}
+    const country = await detectCountry();
+    try {
+      const res = await sbFetch('visits', { method: 'POST', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify({ country }) });
+      if(res.ok){ try { localStorage.setItem('of_last_visit', today); } catch(e){} }
+    } catch(e){}
+  }
+
+  function renderAttendance(stats){
+    const el = document.getElementById('attendance-line');
+    if(!stats){ el.textContent = 'Counting begins soon.'; return; }
+    const total = Number(stats.total) || 0;
+    const countries = (stats.countries || []).filter(c => isCountryCode(c.code));
+    const n = countries.length;
+    const rows = countries.map(c =>
+      `<span class="att-pop-row">${flagImg(c.code)}<span>${escHTML(countryName(c.code))}</span><span>${Number(c.count).toLocaleString('en-US')}</span></span>`
+    ).join('');
+    el.innerHTML = `<span class="att-number">${total.toLocaleString('en-US')}</span> visit${total === 1 ? '' : 's'}`
+      + (n ? ` from <span class="att-countries" tabindex="0" role="button" aria-label="Show the countries of origin">${n} countr${n === 1 ? 'y' : 'ies'}<span class="att-pop"><span class="att-pop-inner">${rows}</span></span></span>` : '')
+      + '.';
+  }
+
+  async function loadAttendance(){
+    if(!backendReady()){ renderAttendance(null); return; }
+    try {
+      const res = await sbFetch('rpc/visit_stats', { method: 'POST', body: '{}' });
+      if(!res.ok) throw new Error('stats');
+      renderAttendance(await res.json());
+    } catch(e){ renderAttendance(null); }
+  }
+
+  function renderNotes(rows){
+    const box = document.getElementById('vb-notes');
+    if(!rows || !rows.length){ box.innerHTML = '<p class="vb-empty">No entries yet. The first page is still blank.</p>'; return; }
+    box.innerHTML = rows.map(n => {
+      const flag = isCountryCode(n.country) ? flagImg(n.country) : '';
+      const day = n.created_at ? fmtDate(String(n.created_at).slice(0, 10)) : '';
+      return `<div class="vb-note"><p>${escHTML(n.message)}</p><div class="vb-meta"><span>${escHTML(n.name)}</span>${flag}<span>${day}</span></div></div>`;
+    }).join('');
+  }
+
+  async function loadNotes(){
+    if(!backendReady()){ renderNotes([]); return; }
+    try {
+      const res = await sbFetch('notes?select=name,message,country,created_at&approved=eq.true&order=created_at.desc&limit=30');
+      if(!res.ok) throw new Error('notes');
+      renderNotes(await res.json());
+    } catch(e){ renderNotes([]); }
+  }
+
+  async function submitNote(e){
+    e.preventDefault();
+    const status = document.getElementById('vb-status');
+    const btn = document.getElementById('vb-submit');
+    if(document.getElementById('vb-website').value){ status.textContent = 'Thank you.'; e.target.reset(); return; }  // honeypot
+    const name = document.getElementById('vb-name').value.trim();
+    const message = document.getElementById('vb-message').value.trim();
+    if(!name || !message){ status.textContent = 'Please add your name and a few words.'; return; }
+    if(!backendReady()){ status.textContent = "The visitors' book is not open yet. Please come back soon."; return; }
+    try {
+      const last = Number(localStorage.getItem('of_last_note') || 0);
+      if(Date.now() - last < 60000){ status.textContent = 'Please wait a moment before signing again.'; return; }
+    } catch(err){}
+    btn.disabled = true;
+    status.textContent = 'Signing…';
+    try {
+      const country = await detectCountry();
+      const res = await sbFetch('notes', { method: 'POST', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify({ name, message, country }) });
+      if(!res.ok) throw new Error('insert');
+      e.target.reset();
+      try { localStorage.setItem('of_last_note', String(Date.now())); } catch(err){}
+      status.textContent = 'Thank you. Your note has been left with the curator and will appear once approved.';
+    } catch(err){
+      status.textContent = 'Something went wrong. Please try again later.';
+    }
+    btn.disabled = false;
+  }
+
+  // Touch devices: tap the number of countries to open or close the list
+  document.getElementById('attendance-line').addEventListener('click', ev => {
+    const c = ev.target.closest('.att-countries');
+    document.querySelectorAll('.att-countries.open').forEach(x => { if(x !== c) x.classList.remove('open'); });
+    if(c) c.classList.toggle('open');
+  });
+  document.addEventListener('click', ev => {
+    if(!ev.target.closest('.att-countries')) document.querySelectorAll('.att-countries.open').forEach(x => x.classList.remove('open'));
+  });
+
   renderStats();
   renderFeatured();
   renderCollections();
@@ -2209,6 +2395,8 @@ const COLLECTION_ORDER = [
   renderHeadline();
   renderEras();
   renderCanvas();
+  recordVisit().then(loadAttendance);
+  loadNotes();
 
 </script>
 
