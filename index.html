@@ -59,6 +59,12 @@
 
   .featured{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; border:1px solid var(--line); padding:56px;}
   .featured .frame{aspect-ratio:4/5; background:radial-gradient(120% 140% at 20% 0%, #2a271e 0%, transparent 60%), linear-gradient(160deg,#221f19,#100f0c 70%); position:relative; overflow:hidden;}
+  .featured-art{min-width:0;}
+  .artwork-label{margin-top:16px; padding-top:14px; border-top:1px solid var(--line);}
+  .artwork-label .aw-title{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; color:var(--ink); margin-bottom:6px;}
+  .artwork-label .aw-line{font-size:12px; color:var(--ink-dim); line-height:1.6;}
+  .artwork-label .aw-line span{display:inline-block; min-width:78px; margin-right:6px; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brass-dim);}
+  .artwork-label .aw-ai{margin-top:6px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint);}
   .featured .frame::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 5px);}
   .featured .id{color:var(--brass); font-size:12px; letter-spacing:0.18em; margin-bottom:14px;}
   .featured h3{font-size:clamp(28px,3.4vw,38px); margin-bottom:6px;}
@@ -276,7 +282,7 @@ const RACES = [
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: ['images/OF-003.jpeg']
+    photos: ['images/OF-003.jpg']
   },
   {
     id: 'OF-004',
@@ -1618,11 +1624,11 @@ const RACES = [
     elevation: '227 m',
     duration: '14:47:41',
     status: 'Preserved',
-    curatorNote: '',
+    curatorNote: 'A proof of concept at full scale. Having long suggested that swimming, cycling and a marathon might be treated as a single outing, the athlete finally submitted the idea to practical testing. After fourteen hours the concept was declared viable, although time itself behaved, as is traditional, with considerable flexibility.',
     story: '',
     bib: '',
     resultsUrl: '',
-    photos: []
+    photos: ['images/OF-087.jpeg']
   }
 ];
 
@@ -1642,6 +1648,26 @@ const COLLECTION_INTROS = {
 const COLLECTION_ORDER = [
   "Road & Trail", "Half Marathons", "Triathlon T100 & 70.3",
   "Marathons", "Ultra Trail", "IronMan"
+];
+
+// Artwork labels shown in the Featured Exhibit, matched by race name + date (not by OF number).
+const ARTWORKS = [
+  { name: 'Mini Maratona de Lisboa (ponte 25 abril)', date: '2011-03-20', title: 'Before Records Began',                 inspired: 'Guernica (1937)',                                          artist: 'Pablo Picasso',          ai: 'AI generated' },
+  { name: 'Meia Maratona S. João das Lampas',         date: '2011-09-10', title: 'An Encounter with Gravity',            inspired: 'Impression, Sunrise (1872)',                               artist: 'Claude Monet',           ai: 'AI modified' },
+  { name: 'Meia Maratona de Lisboa',                  date: '2011-12-04', title: 'The Cost',                             inspired: 'The Scream (1893)',                                        artist: 'Edvard Munch',           ai: 'AI modified' },
+  { name: 'Meia Maratona de Copenhaga',               date: '2012-09-09', title: 'Encouragement in a Foreign Language',  inspired: 'Promenade (1913)',                                         artist: 'August Macke',           ai: 'AI modified' },
+  { name: 'Trail Arruda dos Vinhos',                  date: '2013-03-09', title: 'Field Notes in Mud',                   inspired: 'A pair of shoes (1886)',                                   artist: 'Vincent Van Gogh',       ai: 'AI modified' },
+  { name: 'Raid Atlético Vale dos Barris',            date: '2013-04-21', title: 'The Last Finisher',                    inspired: 'Cubism style',                                             artist: '',                       ai: 'AI generated' },
+  { name: 'Maratona de Lisboa',                       date: '2013-10-06', title: 'Early Arrival at the Wall',            inspired: 'Dynamism of a Cyclist (1913)',                             artist: 'Umberto Boccioni',       ai: 'AI modified' },
+  { name: 'Setúbal Triathlon',                        date: '2025-04-06', title: 'Terms and Conditions Apply',           inspired: 'Twelve sunflowers (1888)',                                 artist: 'Vincent Van Gogh',       ai: 'AI modified' },
+  { name: 'Ultra Trail do Marão',                     date: '2026-03-28', title: 'Chicken Soup',                         inspired: 'Wanderer above the Sea of Fog (1818)',                     artist: 'Caspar David Friedrich', ai: 'AI modified' },
+  { name: 'Maratona da Europa',                       date: '2026-04-25', title: 'The Structural',                       inspired: 'The contemporary figurative paintings of Jeremy Mann',     artist: 'Jeremy Mann',            ai: 'AI modified' },
+  { name: 'IronMan Cascais',                          date: '2026-10-17', title: 'Proof of Concept',                     inspired: 'The Persistence of Memory (1931)',                         artist: 'Salvador Dalí',          ai: 'AI generated' }
+];
+
+// Exhibits that keep their curator's note but stay out of the Featured Exhibit rotation.
+const FEATURED_EXCLUDE = [
+  { name: 'Sines Triathlon', date: '2025-09-21' }
 ];
 </script>
 
@@ -2006,13 +2032,35 @@ const COLLECTION_ORDER = [
 
   let featuredTimer = null;
   let featuredIndex = -1;
+  let featuredPaused = false;
+  let featuredCurrent = null;
+
+  const raceKey = r => r.name + '|' + r.date;
+
+  function featuredPool(){
+    const excluded = new Set(FEATURED_EXCLUDE.map(x => x.name + '|' + x.date));
+    return RACES
+      .filter(r => r.curatorNote && r.curatorNote.trim() && !excluded.has(raceKey(r)))
+      .sort((a,b) => a.id.localeCompare(b.id));
+  }
 
   function pickFeatured(){
-    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim())
-      .sort((a,b) => a.id.localeCompare(b.id));
+    const pool = featuredPool();
     if(!pool.length) return null;
     featuredIndex = (featuredIndex + 1) % pool.length;
     return pool[featuredIndex];
+  }
+
+  function artworkLabel(r){
+    const a = ARTWORKS.find(x => x.name === r.name && x.date === r.date);
+    if(!a) return '';
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    return `<div class="artwork-label">
+      <div class="aw-title">${a.title}</div>
+      <div class="aw-line"><span>Inspired by</span>${cap(a.inspired)}</div>
+      ${a.artist ? `<div class="aw-line"><span>Artist</span>${a.artist}</div>` : ''}
+      <div class="aw-ai">${a.ai}</div>
+    </div>`;
   }
 
   function renderFeaturedRace(f){
@@ -2020,13 +2068,17 @@ const COLLECTION_ORDER = [
       document.getElementById('featured-section').innerHTML = '<p class="empty-note">No exhibits accessioned yet.</p>';
       return;
     }
+    featuredCurrent = f;
     const frameStyle = (f.photos && f.photos.length)
       ? ` style="background-image:linear-gradient(160deg, rgba(34,31,25,0.15), rgba(16,15,12,0.55)), url('${f.photos[0]}'); background-size:cover; background-position:${f.photoFocus || 'center'};"`
       : '';
     document.getElementById('featured-section').innerHTML = `
       <div class="section-head"><span class="eyebrow">Featured Exhibit</span></div>
       <div class="featured">
-        <div class="frame"${frameStyle}></div>
+        <div class="featured-art">
+          <div class="frame"${frameStyle}></div>
+          ${artworkLabel(f)}
+        </div>
         <div>
           <div class="id">${f.id} · ${f.collection} · ${yearOf(f.date)}</div>
           <h3>${f.name}</h3>
@@ -2035,31 +2087,65 @@ const COLLECTION_ORDER = [
           <div class="btn-row">
             <button class="btn-mini" onclick="pauseFeatured()">Pause to Contemplate</button>
             <button class="btn-mini" onclick="resumeFeatured()">Continue the Tour</button>
+            <button class="btn-mini" onclick="restartFeatured()">Return to the Entrance</button>
           </div>
         </div>
       </div>`;
   }
 
+  function startFeaturedTimer(){
+    if(featuredTimer) clearInterval(featuredTimer);
+    featuredTimer = featuredPool().length > 1
+      ? setInterval(() => renderFeaturedRace(pickFeatured()), 7000)
+      : null;
+  }
+
   function pauseFeatured(){
+    featuredPaused = true;
     if(featuredTimer){ clearInterval(featuredTimer); featuredTimer = null; }
   }
 
   function resumeFeatured(){
-    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
-    if(pool.length > 1){
+    featuredPaused = false;
+    if(featuredPool().length > 1){
       renderFeaturedRace(pickFeatured());
-      if(featuredTimer) clearInterval(featuredTimer);
-      featuredTimer = setInterval(() => renderFeaturedRace(pickFeatured()), 7000);
+      startFeaturedTimer();
     }
+  }
+
+  // Back to the first exhibit of the tour (OF-001); keeps the paused / running state
+  function restartFeatured(){
+    featuredIndex = -1;
+    renderFeaturedRace(pickFeatured());
+    if(!featuredPaused) startFeaturedTimer();
   }
 
   function renderFeatured(){
     renderFeaturedRace(pickFeatured());
-    const pool = RACES.filter(r => r.curatorNote && r.curatorNote.trim());
-    if(pool.length > 1){
-      if(featuredTimer) clearInterval(featuredTimer);
-      featuredTimer = setInterval(() => renderFeaturedRace(pickFeatured()), 7000);
-    }
+    startFeaturedTimer();
+  }
+
+  // A photo keeps working if its extension changes (jpg / jpeg / png / webp, any case)
+  const PHOTO_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
+  function photoVariants(path){
+    const m = path.match(/^(.*)\.([A-Za-z0-9]+)$/);
+    if(!m) return [path];
+    return [path].concat(PHOTO_EXTS.map(e => m[1] + '.' + e).filter(u => u !== path));
+  }
+  function probeImage(url){
+    return new Promise(res => { const i = new Image(); i.onload = () => res(true); i.onerror = () => res(false); i.src = url; });
+  }
+  async function resolvePhotos(){
+    let changed = false;
+    await Promise.all(RACES.filter(r => r.photos && r.photos.length).map(async r => {
+      for(const url of photoVariants(r.photos[0])){
+        if(await probeImage(url)){
+          if(url !== r.photos[0]){ r.photos[0] = url; changed = true; }
+          return;
+        }
+      }
+    }));
+    return changed;
   }
 
   function renderCollections(){
@@ -2209,6 +2295,7 @@ const COLLECTION_ORDER = [
   renderHeadline();
   renderEras();
   renderCanvas();
+  resolvePhotos().then(changed => { if(changed && featuredCurrent) renderFeaturedRace(featuredCurrent); });
 
 </script>
 
