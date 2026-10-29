@@ -154,6 +154,14 @@
   .evo-revisited-row span:first-child{color:var(--ink);}
   .evo-revisited-row span:last-child{color:var(--ink-dim);}
 
+  .attendance{text-align:center; padding:70px 24px 80px; border-top:1px solid var(--line);}
+  .attendance .eyebrow{display:block; margin-bottom:18px;}
+  .att-total{font-family:'Cormorant Garamond',serif; font-size:44px; line-height:1.1; color:var(--ink);}
+  .att-countries{margin-top:8px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; color:var(--ink-dim);}
+  .att-top-label{margin-top:34px; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-faint);}
+  .att-top{list-style:none; margin:14px auto 0; padding:0; display:inline-block; text-align:left;}
+  .att-top li{display:flex; align-items:center; gap:12px; padding:6px 0; font-size:14px; color:var(--ink-dim);}
+  .att-top img{width:22px; height:auto; display:block; border:1px solid rgba(242,237,228,0.15);}
   #evolution{padding-bottom:90px;}
   .evo-sub{margin:64px 0 8px;}
   .evo-sub .eyebrow{display:block;}
@@ -1755,6 +1763,16 @@ const FEATURED_EXCLUDE = [
     </div>
   </section>
 
+  <section id="attendance" class="attendance" style="display:none;">
+    <span class="eyebrow">Museum Attendance</span>
+    <div class="att-total" id="att-total"></div>
+    <div class="att-countries" id="att-countries"></div>
+    <div id="att-top-block">
+      <div class="att-top-label">Most frequent visitors</div>
+      <ul class="att-top" id="att-top"></ul>
+    </div>
+  </section>
+
   <footer>Ordinary Feats · A Museum of Ordinary Endurance</footer>
 </div>
 
@@ -2286,6 +2304,81 @@ const FEATURED_EXCLUDE = [
     }
   }
 
+  /* ================= MUSEUM ATTENDANCE ================= */
+  // Supabase project (the publishable key is public by design: the database rules only let visitors add a visit).
+  const ATTENDANCE = {
+    url: 'https://jgggoieazxsexlqbkvwf.supabase.co',
+    key: 'sb_publishable_BivxmUa9zWeVg4Mm-_6oNg_uJVO7hzh'
+  };
+
+  const escHTML = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const isCountryCode = c => typeof c === 'string' && /^[A-Z]{2}$/.test(c);
+  const regionNames = (() => { try { return new Intl.DisplayNames(['en'], {type:'region'}); } catch(e){ return null; } })();
+  function countryName(code){
+    try { return (regionNames && regionNames.of(code)) || code; } catch(e){ return code; }
+  }
+  // Flags are images: Windows does not draw flag emoji
+  function flagImg(code){
+    const c = code.toLowerCase();
+    return `<img src="https://flagcdn.com/w40/${c}.png" srcset="https://flagcdn.com/w80/${c}.png 2x" alt="">`;
+  }
+
+  function attFetch(path, opts){
+    const o = opts || {};
+    const headers = Object.assign({ 'apikey': ATTENDANCE.key, 'Content-Type': 'application/json' }, o.headers || {});
+    return fetch(ATTENDANCE.url + '/rest/v1/' + path, Object.assign({}, o, { headers }));
+  }
+
+  async function detectCountry(){
+    const attempt = async (url, parse) => {
+      try {
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 4000);
+        const res = await fetch(url, { signal: ctl.signal });
+        clearTimeout(timer);
+        return res.ok ? parse(await res.text()) : null;
+      } catch(e){ return null; }
+    };
+    let code = await attempt('https://api.country.is/', t => { try { return JSON.parse(t).country; } catch(e){ return null; } });
+    if(!isCountryCode(code)) code = await attempt('https://www.cloudflare.com/cdn-cgi/trace', t => { const m = t.match(/^loc=([A-Z]{2})$/m); return m ? m[1] : null; });
+    return isCountryCode(code) ? code : null;
+  }
+
+  // Each browser is counted once per day
+  async function recordVisit(){
+    const today = new Date().toISOString().slice(0, 10);
+    try { if(localStorage.getItem('of_last_visit') === today) return; } catch(e){}
+    const code = await detectCountry();
+    try {
+      const res = await attFetch('visits', {
+        method: 'POST',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ country: code ? countryName(code) : null, country_code: code, path: location.pathname })
+      });
+      if(res.ok){ try { localStorage.setItem('of_last_visit', today); } catch(e){} }
+    } catch(e){}
+  }
+
+  function renderAttendance(stats){
+    const total = Number(stats && stats.total);
+    if(!isFinite(total) || total < 1) return;           // nothing to show yet: the section stays hidden
+    const n = Number(stats.countries) || 0;
+    const top = (stats.top || []).filter(c => isCountryCode(c.code));
+    document.getElementById('att-total').textContent = `${total.toLocaleString('en-US')} visit${total === 1 ? '' : 's'}`;
+    document.getElementById('att-countries').textContent = n ? `${n.toLocaleString('en-US')} countr${n === 1 ? 'y' : 'ies'} represented` : '';
+    document.getElementById('att-top').innerHTML = top.map(c => `<li>${flagImg(c.code)}<span>${escHTML(countryName(c.code))}</span></li>`).join('');
+    document.getElementById('att-top-block').style.display = top.length ? '' : 'none';
+    document.getElementById('attendance').style.display = '';
+  }
+
+  async function loadAttendance(){
+    try {
+      const res = await attFetch('rpc/attendance_stats', { method: 'POST', body: '{}' });
+      if(!res.ok) return;
+      renderAttendance(await res.json());
+    } catch(e){}
+  }
+
   renderStats();
   renderFeatured();
   renderCollections();
@@ -2296,6 +2389,7 @@ const FEATURED_EXCLUDE = [
   renderEras();
   renderCanvas();
   resolvePhotos().then(changed => { if(changed && featuredCurrent) renderFeaturedRace(featuredCurrent); });
+  recordVisit().then(loadAttendance);
 
 </script>
 
